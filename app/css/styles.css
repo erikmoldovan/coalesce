@@ -78,7 +78,7 @@ main {
     display: block;
     float: left;
     margin-right: 10px; }
-    #main-header #main-menu a :last {
+    #main-header #main-menu a :last-child {
       margin: 0; }
 
 #content-nav {
