@@ -1,3 +1,4 @@
 node_modules/
 app/libraries
 app/css/*.css
+*.css
