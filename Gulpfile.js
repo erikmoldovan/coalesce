@@ -38,6 +38,7 @@ gulp.task('sass', function() {
 	return gulp.src('./app/sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('./app/css')); 
+    .pipe(connect.reload());
 });
 
 gulp.task('html:watch', function() {
