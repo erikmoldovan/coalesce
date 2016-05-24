@@ -32,5 +32,5 @@ gulp.task('sass:watch', function () {
 });
 
 // Master tasks
-gulp.task('serve', ['connect', 'html:watch', 'sass:watch']);
+gulp.task('serve', ['html', 'sass', 'connect', 'html:watch', 'sass:watch']);
 gulp.task('default', ['serve']);
