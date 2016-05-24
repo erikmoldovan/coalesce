@@ -28,7 +28,7 @@ gulp.task('html:watch', function() {
 });
 
 gulp.task('sass:watch', function () {
-    gulp.watch('./sass/**/*.scss', ['sass']);
+    gulp.watch('./app/sass/**/*.scss', ['sass']);
 });
 
 // Master tasks
