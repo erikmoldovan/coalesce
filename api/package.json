@@ -11,5 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "body-parser": "^1.15.1",
-    "express": "^4.13.4"  }
+    "express": "^4.13.4",
+    "https": "^1.0.0",
+    "querystring": "^0.2.0"
+  }
 }

@@ -7,6 +7,8 @@
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
+var querystring = require('querystring');
+var https =      require('https');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -14,6 +16,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port = process.env.PORT || 9000;        // set our port
+var host = "api.meetup.com";
+var apiKey = "1142381b68362c61371669687e3d6db";
+
+// Endpoints
+var endpoints = {
+	open_events: "/2/open_events"
+};
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -34,3 +43,46 @@ app.use('/api', router);
 // =============================================================================
 app.listen(port);
 console.log('Magic happens on port ' + port);
+
+
+
+
+// function performRequest(endpoint, method, data, success) {
+//   var dataString = JSON.stringify(data);
+//   var headers = {};
+  
+//   if (method == 'GET') {
+//     endpoint += '?' + querystring.stringify(data);
+//   }
+//   else {
+//     headers = {
+//       'Content-Type': 'application/json',
+//       'Content-Length': dataString.length
+//     };
+//   }
+//   var options = {
+//     host: host,
+//     path: endpoint,
+//     method: method,
+//     headers: headers
+//   };
+
+//   var req = https.request(options, function(res) {
+//     res.setEncoding('utf-8');
+
+//     var responseString = '';
+
+//     res.on('data', function(data) {
+//       responseString += data;
+//     });
+
+//     res.on('end', function() {
+//       console.log(responseString);
+//       var responseObject = JSON.parse(responseString);
+//       success(responseObject);
+//     });
+//   });
+
+//   req.write(dataString);
+//   req.end();
+// }
