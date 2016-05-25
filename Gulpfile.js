@@ -2,7 +2,8 @@
 var gulp = require('gulp'),
 	connect = require('gulp-connect'),
 	nodemon = require('gulp-nodemon'),
-	sass = require('gulp-sass');
+	sass = require('gulp-sass'),
+	notify = require('gulp-notify');
 
 // Base tasks
 gulp.task('map:connect', function() {
@@ -18,7 +19,7 @@ gulp.task('api:connect', function() {
         // the script to run the app
         script: 'api/server.js',
         // this listens to changes in any of these files/routes and restarts the application
-        watch: ["server.js"],
+        watch: ["api/server.js"],
         ext: 'js'
         // Below i'm using es6 arrow functions but you can remove the arrow and have it a normal .on('restart', function() { // then place your stuff in here }
     }).on('restart', () => {
