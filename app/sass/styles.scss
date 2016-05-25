@@ -51,27 +51,6 @@ table {
   border-spacing: 0;
 }
 
-#body-wrapper {
-  width: 100%;
-  height: 100%;
-  float: left;
-  margin-top: -60px;
-  padding-top: 60px;
-  box-sizing: border-box;
-}
-
-main {
-  width: 80%;
-  height: 100%;
-  float: left;
-}
-
-#map {
-  background: #D9F1F9;
-  width: 100%;
-  height: 100%;
-}
-
 #main-header {
   height: 60px;
   width: 100%;
@@ -131,16 +110,38 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00cccccc', e
 	}
 }
 
+#body-wrapper {
+  width: 100%;
+  height: 100%;
+  float: left;
+  margin-top: -60px;
+  padding-top: 60px;
+  box-sizing: border-box;
+}
+
+main {
+  width: 78%;
+  height: 100%;
+  float: left;
+}
+
+#map {
+  background: #D9F1F9;
+  width: 100%;
+  height: 100%;
+}
+
 #content-nav {
-	width: 20%;
+	width: 22%;
 	height: 100%;
 	float: left;
 	border-left: 1px solid #B3B3B3;
 	box-sizing: border-box;
+    overflow-y: scroll;
 
   .top-view-nav {
 	width:100%;
-	height: 40%;
+	height: 350px;
 	background: #FBFBFB;
 	float: left;
 	border-left: 1px solid #fff;
@@ -149,7 +150,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00cccccc', e
   }
   .bottom-view-nav {
 	width:100%;
-	height: 60%;
+	height: 100%;
 	float: left;
 	background: #F3F3F3;
 	box-shadow: inset 4px 5px 6px -5px #999;
