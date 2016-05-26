@@ -1,3 +1,5 @@
+var data_url = "/meetup_results.json";
+
 var Header = React.createClass({	
   displayName: "Header",
   render: function(){
@@ -57,17 +59,72 @@ var TopViewNav = React.createClass({
   }
 });
 
+var ShowList = React.createClass({
+  render: function(){
+    var listItems = this.props.data.results.map(function(friend, index){
+      return <Event key={index} data={friend}/>;
+    });
+    return (
+      <div>
+        {listItems}
+      </div>
+    )
+  }
+});
+
+var Event = React.createClass({
+  render: function() {
+    return (
+        <div>{this.props.data.venue.name}</div>
+      )
+  }
+});
+
 var BottomViewNav = React.createClass({	
   displayName: "BottomViewNav",
+  getInitialState: function(){
+    return {
+      name: 'Tyler McGinnis',
+      friends: ['Jake Lingwall', 'Murphy Randall', 'Merrick Christensen']
+    }
+  },
   render: function(){
     return (
-		<div id="bottom-view-nav"></div>
+		<div id="bottom-view-nav">
+        	<ShowList data={this.props.data} />
+		</div>
     )
   }
 });
 
 var PageRender = React.createClass({	
   displayName: "PageRender",
+  getInitialState: function() {
+    return {
+      data: {
+      	results: []
+      }
+    };
+  },
+
+  MeetUpResults: function() {
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        this.setState({ data: data });
+        console.log(data)
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+
+  componentDidMount: function() {
+    this.MeetUpResults();
+  },
   render: function(){
     return (
     	<div id="body-wrapper">
@@ -76,7 +133,7 @@ var PageRender = React.createClass({
 	    		<main><Map /></main>
 	    		<aside id="content-nav">
 					<TopViewNav />
-					<BottomViewNav />
+					<BottomViewNav data={this.state.data}/>
 				</aside>
 			</div>
 		</div>
@@ -84,4 +141,4 @@ var PageRender = React.createClass({
   }
 });
 
-ReactDOM.render(<PageRender />, document.getElementById('react-wrapper'));
+ReactDOM.render(<PageRender url={data_url}/>, document.getElementById('react-wrapper'));
