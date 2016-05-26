@@ -9,10 +9,11 @@
   <meta name="author" content="Erik Moldovan and Aaron Wyler">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"">
 
-  <script type="text/javascript" src="libraries/react/react.min.js"></script>
+  <script type="text/javascript" src="libraries/react/react.js"></script>
+  <script type="text/javascript" src="libraries/react/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.js"></script>
 
-
-  <script type="text/javascript" src="js/coalesce.js"></script>
+  <script type="text/babel" src="js/coalesce.js"></script>
   <link rel="stylesheet" href="css/styles.css?v=1.0">
   <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic,300,300italic' rel='stylesheet' type='text/css'>
 
@@ -22,33 +23,7 @@
 </head>
 
 <body>
-	<header id="main-header">
-		<div id="logo">Logo</div>
-		<nav id="main-menu">
-			<nav id="search">
-				<input type="textbox" name="">
-			</nav>
-			<div id="nav-buttons">
-				<a href="#" class="menu1">Menu 1</a>
-				<a href="#" class="menu2">Menu 2</a>
-				<a href="#" class="menu3">Menu 3</a>
-				<a href="#" class="menu4">Menu 4</a>
-				<a href="#" class="menu5">Menu 5</a>
-			</div>
-		</nav>
-		<div id="login">
-			<a href="#">Login/Logout</a>
-		</div>
-	</header>
-	<div id="body-wrapper">
-		<main>
-			<div id="map"></div>
-		</main>
-		<aside id="content-nav">
-			<div id="top-view-nav">
-			</div>
-			<div id="bottom-view-nav"></div>
-		</aside>
+	<div id="react-wrapper">
 	</div>
 </body>
 </html>
