@@ -19,4 +19,4 @@ var TopViewNav = React.createClass({
   }
 });
 
-ReactDOM.render(<TopViewNav />, document.getElementById('top-view-nav'));
+ReactDOM.render(<TopViewNav />, null, document.getElementById('top-view-nav'));
