@@ -14,5 +14,8 @@
   "devDependencies": {
     "react": "^15.1.0",
     "jquery": "^2.2.4"
+  },
+  "dependencies": {
+    "moment": "^2.13.0"
   }
 }

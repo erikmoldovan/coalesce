@@ -74,20 +74,28 @@ var ShowList = React.createClass({
 
 var Event = React.createClass({
   render: function() {
+  var EventItem = this.props.data;
+
+  var dur = EventItem.duration === undefined ? 0 : EventItem.duration + EventItem.time
+  var CalDate = moment(EventItem.time).format("dddd, MMMM DD, YYYY");
+  var Time = moment(EventItem.time).format("h:mm A");
+  var Duration = dur === 0 ? "" : "to " + moment(dur).format("h:mm A");
+
+  /*var name = EventItem.venue === undefined ? EventItem.group.name : EventItem.venue.name;*/
     return (
-        <div>{this.props.data.venue.name}</div>
+        <div className="event-item">
+          <div className="title">{EventItem.name}</div>
+          <div className="date-time">
+            <div className="date">{CalDate}</div>
+            <div className="time">{Time} {Duration}</div>
+          </div>
+        </div>
       )
   }
 });
 
 var BottomViewNav = React.createClass({	
   displayName: "BottomViewNav",
-  getInitialState: function(){
-    return {
-      name: 'Tyler McGinnis',
-      friends: ['Jake Lingwall', 'Murphy Randall', 'Merrick Christensen']
-    }
-  },
   render: function(){
     return (
 		<div id="bottom-view-nav">
