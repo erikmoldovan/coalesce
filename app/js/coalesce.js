@@ -47,13 +47,13 @@ var TopViewNav = React.createClass({
         var dur = selected.duration === undefined ? 0 : selected.duration + selected.time;
         var CalDate = moment(selected.time).format("dddd, MMMM DD, YYYY");
         var Time = moment(selected.time).format("h:mm A");
-        var Duration = dur === 0 ? "" : "to " + moment(dur).format("h:mm A");
+        var Duration = dur === 0 ? "" : " to " + moment(dur).format("h:mm A");
         return (
           <div id="top-view-nav">
             <div className="event-name">{selected.name}</div>
             <div className="event-date-time">
               <div className="event-date">{CalDate}</div>
-              <div className="event-time">{Time} {Duration}</div>
+              <div className="event-time">{Time}{Duration}</div>
             </div>
             <div className="event-location">
               <div className="location-name">{selected.venue.name || ""}</div>
@@ -87,13 +87,13 @@ var Event = React.createClass({
   var dur = EventItem.duration === undefined ? 0 : EventItem.duration + EventItem.time;
   var CalDate = moment(EventItem.time).format("dddd, MMMM DD, YYYY");
   var Time = moment(EventItem.time).format("h:mm A");
-  var Duration = dur === 0 ? "" : "to " + moment(dur).format("h:mm A");
+  var Duration = dur === 0 ? "" : " to " + moment(dur).format("h:mm A");
     return (
         <div className="event-item">
           <div className="title">{EventItem.name}</div>
           <div className="date-time">
             <div className="date">{CalDate}</div>
-            <div className="time">{Time} {Duration}</div>
+            <div className="time">{Time}{Duration}</div>
           </div>
         </div>
       )
