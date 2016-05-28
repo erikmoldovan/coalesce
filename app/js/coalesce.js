@@ -89,11 +89,11 @@ var ShowList = React.createClass({
   render: function(){
     var that = this;
     var listItems = this.props.data.results.map(function(EventItem, index){
-      if (index !== that.props.selectedItemIndex) {
-        return <Event key={index} data={EventItem} index={index} clickHandler={that.props.clickHandler}/>;
-      } else {
-        return;
+      var selectedClass = "";
+      if (index === that.props.selectedItemIndex) {
+        selectedClass = " selected";
       }
+      return <Event key={index} selectedClass={selectedClass} data={EventItem} index={index} clickHandler={that.props.clickHandler}/>;
     });
     return (
       <div>
@@ -106,18 +106,20 @@ var ShowList = React.createClass({
 var Event = React.createClass({
   render: function() {
   var EventItem = this.props.data;
-
+  var classes = "event-item" + this.props.selectedClass
   var dur = EventItem.duration === undefined ? 0 : EventItem.duration + EventItem.time;
   var CalDate = moment(EventItem.time).format("dddd, MMMM DD, YYYY");
   var Time = moment(EventItem.time).format("h:mm A");
   var Duration = dur === 0 ? "" : " to " + moment(dur).format("h:mm A");
   let boundClick = this.props.clickHandler.bind(null, this.props.index);
     return (
-        <div className="event-item" onClick={boundClick}>
-          <div className="title">{EventItem.name}</div>
-          <div className="date-time">
-            <div className="date">{CalDate}</div>
-            <div className="time">{Time}{Duration}</div>
+        <div className={classes} onClick={boundClick}>
+          <div className="item-wrapper">
+            <div className="title">{EventItem.name}</div>
+            <div className="date-time">
+              <div className="date">{CalDate}</div>
+              <div className="time">{Time}{Duration}</div>
+            </div>
           </div>
         </div>
       )
