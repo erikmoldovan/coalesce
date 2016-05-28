@@ -1,3 +1,34 @@
+const React = window.React;
+const { Map, TileLayer, Marker, Popup } = window.ReactLeaflet;
+
+class MapWrapper extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      lat: 40.7128,
+      lng: -74.0059,
+      zoom: 13,
+    };
+  }
+
+  render() {
+    const position = [this.state.lat, this.state.lng];
+    return (
+      <Map center={position} zoom={this.state.zoom}>
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+        />
+        <Marker position={position}>
+          <Popup>
+            <span>A pretty CSS3 popup. <br/> Easily customizable.</span>
+          </Popup>
+        </Marker>
+      </Map>
+    );
+  }
+}
+
 var data_url = "/meetup_results.json";
 
 var Header = React.createClass({	
@@ -5,7 +36,7 @@ var Header = React.createClass({
   render: function(){
     return (
 	<header id="main-header">
-		<div id="logo">Logo</div>
+		<div id="logo"></div>
 		<nav id="main-menu">
 			<nav id="search">
 				<input type="textbox" name=""/>
@@ -27,14 +58,14 @@ var Header = React.createClass({
 });
 
 
-var Map = React.createClass({	
-  displayName: "Map",
-  render: function(){
-    return (
-		<div id="map"></div>
-    )
-  }
-});
+// var Map = React.createClass({	
+//   displayName: "Map",
+//   render: function(){
+//     return (
+// 		<div id="mapid"></div>
+//     )
+//   }
+// });
 
 var TopViewNav = React.createClass({ 
   displayName: "TopViewNav",
@@ -143,7 +174,7 @@ var PageRender = React.createClass({
     	<div id="body-wrapper">
 	    	<Header />
 	    	<div id="main-wrapper">
-	    		<main><Map /></main>
+	    		<main><div id="mapid"><MapWrapper /></div></main>
 	    		<aside id="content-nav">
 					<TopViewNav data={this.state.data}/>
 					<BottomViewNav data={this.state.data}/>
