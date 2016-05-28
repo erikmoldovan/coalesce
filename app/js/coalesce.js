@@ -62,11 +62,11 @@ var TopViewNav = React.createClass({
     if (selectedEvent === undefined) {
       return (<div></div>);
     } else {
-     console.log(selectedEvent);
         var dur = selectedEvent.duration === undefined ? 0 : selectedEvent.duration + selectedEvent.time;
         var CalDate = moment(selectedEvent.time).format("dddd, MMMM DD, YYYY");
         var Time = moment(selectedEvent.time).format("h:mm A");
         var Duration = dur === 0 ? "" : " to " + moment(dur).format("h:mm A");
+        var venue = selectedEvent.venue !== undefined ? selectedEvent.venue : {};
         return (
           <div id="top-view-nav">
             <div className="event-name">{selectedEvent.name}</div>
@@ -75,8 +75,8 @@ var TopViewNav = React.createClass({
               <div className="event-time">{Time}{Duration}</div>
             </div>
             <div className="event-location">
-              <div className="location-name">{selectedEvent.venue.name || ""}</div>
-              <div className="location-address">{selectedEvent.venue.address_1 || ""} {selectedEvent.venue.address_2 || ""} {selectedEvent.venue.address_3 || ""}, {selectedEvent.venue.city}, {selectedEvent.venue.state}</div>
+              <div className="location-name">{venue.name || ""}</div>
+              <div className="location-address">{venue.address_1 || ""} {venue.address_2 || ""} {venue.address_3 || ""}, {venue.city}, {venue.state}</div>
             </div>
             <div className="event-description">{selectedEvent.description}</div>
           </div>
@@ -87,7 +87,7 @@ var TopViewNav = React.createClass({
 
 var ShowList = React.createClass({
   render: function(){
-    this.props.data.results.shift();
+    this.props.data.results;
     var that = this;
     var listItems = this.props.data.results.map(function(EventItem, index){
       return <Event key={index} data={EventItem} index={index} clickHandler={that.props.clickHandler}/>;
@@ -108,7 +108,7 @@ var Event = React.createClass({
   var CalDate = moment(EventItem.time).format("dddd, MMMM DD, YYYY");
   var Time = moment(EventItem.time).format("h:mm A");
   var Duration = dur === 0 ? "" : " to " + moment(dur).format("h:mm A");
-  let boundClick = this.props.clickHandler.bind(this, this.props.index);
+  let boundClick = this.props.clickHandler.bind(null, this.props.index);
     return (
         <div className="event-item" onClick={boundClick}>
           <div className="title">{EventItem.name}</div>
