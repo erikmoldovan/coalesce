@@ -28,8 +28,9 @@ router.get('/', function(req, res) {
 });
 
 router.get('/getEvents', function(req, res) {
+	console.log(req.query.zip);
     meetup.getOpenEvents({
-		zip: '98122'
+		zip: req.query.zip
 	}, function(error, events) {
 		if (error) {
 			console.log(error);
