@@ -13,7 +13,9 @@
   ],
   "devDependencies": {
     "react": "^15.1.0",
-    "jquery": "^2.2.4"
+    "jquery": "^2.2.4",
+    "react-leaflet": "^0.11.5",
+    "babel": "*"
   },
   "dependencies": {
     "moment": "^2.13.0"
