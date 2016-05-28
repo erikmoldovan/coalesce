@@ -60,27 +60,27 @@ var Header = React.createClass({
 var TopViewNav = React.createClass({ 
   displayName: "TopViewNav",
   render: function(){
-    var selected = this.props.data.results[this.props.SelectedItem];
-    if (selected === undefined) {
+    var selectedEvent = this.props.data.results[this.props.selectedItemIndex];
+    if (selectedEvent === undefined) {
       return (<div></div>);
     } else {
-     console.log(selected);
-        var dur = selected.duration === undefined ? 0 : selected.duration + selected.time;
-        var CalDate = moment(selected.time).format("dddd, MMMM DD, YYYY");
-        var Time = moment(selected.time).format("h:mm A");
+     console.log(selectedEvent);
+        var dur = selectedEvent.duration === undefined ? 0 : selectedEvent.duration + selectedEvent.time;
+        var CalDate = moment(selectedEvent.time).format("dddd, MMMM DD, YYYY");
+        var Time = moment(selectedEvent.time).format("h:mm A");
         var Duration = dur === 0 ? "" : " to " + moment(dur).format("h:mm A");
         return (
           <div id="top-view-nav">
-            <div className="event-name">{selected.name}</div>
+            <div className="event-name">{selectedEvent.name}</div>
             <div className="event-date-time">
               <div className="event-date">{CalDate}</div>
               <div className="event-time">{Time}{Duration}</div>
             </div>
             <div className="event-location">
-              <div className="location-name">{selected.venue.name || ""}</div>
-              <div className="location-address">{selected.venue.address_1 || ""} {selected.venue.address_2 || ""} {selected.venue.address_3 || ""}, {selected.venue.city}, {selected.venue.state}</div>
+              <div className="location-name">{selectedEvent.venue.name || ""}</div>
+              <div className="location-address">{selectedEvent.venue.address_1 || ""} {selectedEvent.venue.address_2 || ""} {selectedEvent.venue.address_3 || ""}, {selectedEvent.venue.city}, {selectedEvent.venue.state}</div>
             </div>
-            <div className="event-description">{selected.description}</div>
+            <div className="event-description">{selectedEvent.description}</div>
           </div>
         )
       }
@@ -90,8 +90,9 @@ var TopViewNav = React.createClass({
 var ShowList = React.createClass({
   render: function(){
     this.props.data.results.shift();
+    var that = this;
     var listItems = this.props.data.results.map(function(EventItem, index){
-      return <Event key={index} data={EventItem}/>;
+      return <Event key={index} data={EventItem} index={index} clickHandler={that.props.clickHandler}/>;
     });
     return (
       <div>
@@ -110,7 +111,7 @@ var Event = React.createClass({
   var Time = moment(EventItem.time).format("h:mm A");
   var Duration = dur === 0 ? "" : " to " + moment(dur).format("h:mm A");
     return (
-        <div className="event-item">
+        <div className="event-item" onClick={this.props.clickHandler}>
           <div className="title">{EventItem.name}</div>
           <div className="date-time">
             <div className="date">{CalDate}</div>
@@ -126,15 +127,14 @@ var BottomViewNav = React.createClass({
   render: function(){
     return (
 		<div id="bottom-view-nav">
-        	<ShowList data={this.props.data} />
+        	<ShowList data={this.props.data} clickHandler={this.props.clickHandler} />
 		</div>
     )
   }
 });
 
 var PageRender = React.createClass({
-
-  SelectedItem: 0,
+  selectedItemIndex: 0,
   displayName: "PageRender",
   getInitialState: function() {
     return {
@@ -143,7 +143,6 @@ var PageRender = React.createClass({
       }
     };
   },
-
   MeetUpResults: function(zip) {
     var url = "http://localhost:9000/api/getEvents?zip=" + zip;
     $.ajax({
@@ -158,9 +157,11 @@ var PageRender = React.createClass({
       }.bind(this)
     });
   },
-
   componentDidMount: function() {
     this.MeetUpResults("98122");
+  },
+  clickHandler: function(newSelectedEventIndex) {
+    console.log("clicked!", newSelectedEventIndex);
   },
   render: function(){
     return (
@@ -169,8 +170,8 @@ var PageRender = React.createClass({
 	    	<div id="main-wrapper">
 	    		<main><div id="mapid"><MapWrapper /></div></main>
 	    		<aside id="content-nav">
-					<TopViewNav data={this.state.data} SelectedItem={this.SelectedItem}/>
-					<BottomViewNav data={this.state.data}/>
+					<TopViewNav data={this.state.data} selectedItemIndex={this.selectedItemIndex}/>
+					<BottomViewNav data={this.state.data} clickHandler={this.clickHandler}/>
 				</aside>
 			</div>
 		</div>
