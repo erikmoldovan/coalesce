@@ -142,9 +142,10 @@ var PageRender = React.createClass({
     };
   },
 
-  MeetUpResults: function() {
+  MeetUpResults: function(zip) {
+    var url = "http://localhost:9000/api/getEvents?zip=" + zip;
     $.ajax({
-      url: "http://localhost:9000/api/getEvents",
+      url: url,
       dataType: 'json',
       cache: false,
       success: function(data) {
@@ -157,7 +158,7 @@ var PageRender = React.createClass({
   },
 
   componentDidMount: function() {
-    this.MeetUpResults();
+    this.MeetUpResults("98122");
   },
   render: function(){
     return (
