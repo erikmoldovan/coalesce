@@ -87,10 +87,14 @@ var TopViewNav = React.createClass({
 
 var ShowList = React.createClass({
   render: function(){
-    this.props.data.results.shift();
+    // this.props.data.results.shift();
     var that = this;
     var listItems = this.props.data.results.map(function(EventItem, index){
-      return <Event key={index} data={EventItem} index={index} clickHandler={that.props.clickHandler}/>;
+      if (index !== that.props.selectedItemIndex) {
+        return <Event key={index} data={EventItem} index={index} clickHandler={that.props.clickHandler}/>;
+      } else {
+        return;
+      }
     });
     return (
       <div>
@@ -126,7 +130,7 @@ var BottomViewNav = React.createClass({
   render: function(){
     return (
 		<div id="bottom-view-nav">
-        	<ShowList data={this.props.data} clickHandler={this.props.clickHandler} />
+        	<ShowList data={this.props.data} clickHandler={this.props.clickHandler} selectedItemIndex={this.props.selectedItemIndex} />
 		</div>
     )
   }
@@ -171,7 +175,7 @@ var PageRender = React.createClass({
 	    		<main><div id="mapid"><MapWrapper /></div></main>
 	    		<aside id="content-nav">
 					<TopViewNav data={this.state.data} selectedItemIndex={this.state.selectedItemIndex}/>
-					<BottomViewNav data={this.state.data} clickHandler={this.clickHandler}/>
+					<BottomViewNav data={this.state.data} clickHandler={this.clickHandler} selectedItemIndex={this.state.selectedItemIndex}/>
 				</aside>
 			</div>
 		</div>
