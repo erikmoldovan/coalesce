@@ -19,5 +19,8 @@
   },
   "dependencies": {
     "moment": "^2.13.0"
+  },
+  "resolutions": {
+    "react": "^15.1.0"
   }
 }
