@@ -110,8 +110,9 @@ var Event = React.createClass({
   var CalDate = moment(EventItem.time).format("dddd, MMMM DD, YYYY");
   var Time = moment(EventItem.time).format("h:mm A");
   var Duration = dur === 0 ? "" : " to " + moment(dur).format("h:mm A");
+  let boundClick = this.props.clickHandler.bind(this, this.props.index);
     return (
-        <div className="event-item" onClick={this.props.clickHandler}>
+        <div className="event-item" onClick={boundClick}>
           <div className="title">{EventItem.name}</div>
           <div className="date-time">
             <div className="date">{CalDate}</div>
