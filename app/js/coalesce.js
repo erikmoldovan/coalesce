@@ -5,8 +5,8 @@ class MapWrapper extends React.Component {
   constructor() {
     super();
     this.state = {
-      lat: 40.7128,
-      lng: -74.0059,
+      lat: 47.6081392,
+      lng: -122.3313049,
       zoom: 13,
     };
   }
