@@ -87,11 +87,6 @@ var TopViewNav = React.createClass({
 
 var ShowList = React.createClass({
   render: function(){
-<<<<<<< HEAD
-    // this.props.data.results.shift();
-=======
-    this.props.data.results;
->>>>>>> origin/master
     var that = this;
     var listItems = this.props.data.results.map(function(EventItem, index){
       if (index !== that.props.selectedItemIndex) {
