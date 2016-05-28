@@ -39,7 +39,7 @@ var Header = React.createClass({
 		<div id="logo"></div>
 		<nav id="main-menu">
 			<nav id="search">
-				<input type="textbox" name=""/>
+				<input id="search" type="textbox" name="search"/>
 			</nav>
 			<div id="nav-buttons">
 				<a href="#" className="menu1">Menu 1</a>
@@ -56,16 +56,6 @@ var Header = React.createClass({
     )
   }
 });
-
-
-// var Map = React.createClass({	
-//   displayName: "Map",
-//   render: function(){
-//     return (
-// 		<div id="mapid"></div>
-//     )
-//   }
-// });
 
 var TopViewNav = React.createClass({ 
   displayName: "TopViewNav",
