@@ -39,7 +39,7 @@ var Header = React.createClass({
 		<div id="logo"></div>
 		<nav id="main-menu">
 			<nav id="search">
-				<input id="search" type="textbox" name="search"/>
+				<input id="search-bar" type="textbox" name="search-bar"/>
 			</nav>
 			<div id="nav-buttons">
 				<a href="#" className="menu1">Menu 1</a>
