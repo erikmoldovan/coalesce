@@ -39,7 +39,7 @@ var Header = React.createClass({
 		<div id="logo"></div>
 		<nav id="main-menu">
 			<nav id="search">
-				<input id="search-bar" type="textbox" name="search-bar"/>
+				<input id="search-bar" type="textbox" name="search-bar" minlength="5" maxlength="9"/>
 			</nav>
 			<div id="nav-buttons">
 				<a href="#" className="menu1">Menu 1</a>
@@ -60,7 +60,7 @@ var Header = React.createClass({
 var TopViewNav = React.createClass({ 
   displayName: "TopViewNav",
   render: function(){
-    var selected = this.props.data.results[0];
+    var selected = this.props.data.results[this.props.SelectedItem];
     if (selected === undefined) {
       return (<div></div>);
     } else {
@@ -132,7 +132,9 @@ var BottomViewNav = React.createClass({
   }
 });
 
-var PageRender = React.createClass({	
+var PageRender = React.createClass({
+
+  SelectedItem: 0,
   displayName: "PageRender",
   getInitialState: function() {
     return {
@@ -167,7 +169,7 @@ var PageRender = React.createClass({
 	    	<div id="main-wrapper">
 	    		<main><div id="mapid"><MapWrapper /></div></main>
 	    		<aside id="content-nav">
-					<TopViewNav data={this.state.data}/>
+					<TopViewNav data={this.state.data} SelectedItem={this.SelectedItem}/>
 					<BottomViewNav data={this.state.data}/>
 				</aside>
 			</div>
