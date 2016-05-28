@@ -123,7 +123,7 @@ var PageRender = React.createClass({
 
   MeetUpResults: function() {
     $.ajax({
-      url: this.props.url,
+      url: "http://localhost:9000/api/getEvents",
       dataType: 'json',
       cache: false,
       success: function(data) {

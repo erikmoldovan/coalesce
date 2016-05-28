@@ -10,6 +10,12 @@ var meetup = require('meetup-api')({
 	key: '1142381b68362c61371669687e3d6db'
 });
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 var port = process.env.PORT || 9000;        // set our port
 
 // ROUTES FOR OUR API
