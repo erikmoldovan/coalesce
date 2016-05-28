@@ -29,8 +29,6 @@ class MapWrapper extends React.Component {
   }
 }
 
-var data_url = "/meetup_results.json";
-
 var Header = React.createClass({	
   displayName: "Header",
   render: function(){
@@ -135,10 +133,10 @@ var BottomViewNav = React.createClass({
 });
 
 var PageRender = React.createClass({
-  selectedItemIndex: 0,
   displayName: "PageRender",
   getInitialState: function() {
     return {
+      selectedItemIndex: 0,
       data: {
       	results: []
       }
@@ -163,6 +161,7 @@ var PageRender = React.createClass({
   },
   clickHandler: function(newSelectedEventIndex) {
     console.log("clicked!", newSelectedEventIndex);
+    this.setState({selectedItemIndex: newSelectedEventIndex});
   },
   render: function(){
     return (
@@ -171,7 +170,7 @@ var PageRender = React.createClass({
 	    	<div id="main-wrapper">
 	    		<main><div id="mapid"><MapWrapper /></div></main>
 	    		<aside id="content-nav">
-					<TopViewNav data={this.state.data} selectedItemIndex={this.selectedItemIndex}/>
+					<TopViewNav data={this.state.data} selectedItemIndex={this.state.selectedItemIndex}/>
 					<BottomViewNav data={this.state.data} clickHandler={this.clickHandler}/>
 				</aside>
 			</div>
@@ -180,4 +179,4 @@ var PageRender = React.createClass({
   }
 });
 
-ReactDOM.render(<PageRender url={data_url}/>, document.getElementById('react-wrapper'));
+ReactDOM.render(<PageRender/>, document.getElementById('react-wrapper'));
