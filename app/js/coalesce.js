@@ -29,28 +29,50 @@ class MapWrapper extends React.Component {
   }
 }
 
-var Header = React.createClass({	
+var Header = React.createClass({
+  getInitialState: function() {
+    return {
+      zipCode: '',
+    }
+  },
   displayName: "Header",
+
+  zipInput: function(zipCallback) {
+    this.setState({zipCode: zipCallback.target.value});
+  },
+  zipChange: function(e) {
+    e.preventDefault();
+    console.log(e);
+    this.setState({selectedZip: zipCode});
+    console.log(this.state.selectedZip);
+  },
+  componentDidMount: function() {      
+    this.setState({zipCode: this.props.selectedZip});  
+  },
   render: function(){
+
     return (
-	<header id="main-header">
-		<div id="logo"></div>
-		<nav id="main-menu">
-			<nav id="search">
-				<input id="search-bar" type="textbox" name="search-bar" minlength="5" maxlength="9"/>
-			</nav>
-			<div id="nav-buttons">
-				<a href="#" className="menu1">Menu 1</a>
-				<a href="#" className="menu2">Menu 2</a>
-				<a href="#" className="menu3">Menu 3</a>
-				<a href="#" className="menu4">Menu 4</a>
-				<a href="#" className="menu5">Menu 5</a>
-			</div>
-		</nav>
-		<div id="login">
-			<a href="#">Login/Logout</a>
-		</div>
-	</header>
+    	<header id="main-header">
+    		<div id="logo"></div>
+    		<nav id="main-menu">
+    			<nav id="search">
+            <form onSubmit={this.zipChange}>
+    				  <input id="search-bar" type="textbox" name="search-bar" minlength="5" maxlength="9" />
+              <input type="submit" />
+            </form>
+    			</nav>
+    			<div id="nav-buttons">
+    				<a href="#" className="menu1">Menu 1</a>
+    				<a href="#" className="menu2">Menu 2</a>
+    				<a href="#" className="menu3">Menu 3</a>
+    				<a href="#" className="menu4">Menu 4</a>
+    				<a href="#" className="menu5">Menu 5</a>
+    			</div>
+    		</nav>
+    		<div id="login">
+    			<a href="#">Login/Logout</a>
+    		</div>
+    	</header>
     )
   }
 });
@@ -141,6 +163,7 @@ var PageRender = React.createClass({
   displayName: "PageRender",
   getInitialState: function() {
     return {
+      selectedZip: '98122',
       selectedItemIndex: 0,
       data: {
       	results: []
@@ -162,7 +185,11 @@ var PageRender = React.createClass({
     });
   },
   componentDidMount: function() {
-    this.MeetUpResults("98122");
+    this.MeetUpResults('98122');
+  },
+  zipCallback: function(selectedZip) {
+    console.log("clicked!", selectedZip);
+    this.setState({selectedZip: zipCallback})
   },
   clickHandler: function(newSelectedEventIndex) {
     console.log("clicked!", newSelectedEventIndex);
@@ -171,7 +198,7 @@ var PageRender = React.createClass({
   render: function(){
     return (
     	<div id="body-wrapper">
-	    	<Header />
+	    	<Header zipCallback={this.zipCallback} selectedZip={this.state.selectedZip}/>
 	    	<div id="main-wrapper">
 	    		<main><div id="mapid"><MapWrapper /></div></main>
 	    		<aside id="content-nav">
