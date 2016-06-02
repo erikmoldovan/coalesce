@@ -44,7 +44,7 @@ var Header = React.createClass({
     			<nav id="search">
             <form name="zipForm" onSubmit={this.zipChange}>
     				  <input id="search-bar" type="text" name="search-bar" minlength="5" maxlength="9" ref="input" placeholder="Enter Zipcode"/>
-              <button type="submit">x</button>
+              <button type="submit" form="zipForm" value="Submit"></button>
             </form>
     			</nav>
         </nav>

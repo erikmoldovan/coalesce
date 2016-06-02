@@ -93,13 +93,31 @@ a {
 			box-sizing: border-box;
     		padding: 10px 0px 0px 8px;
 
-			input {
-				font-size: 16px;
-			    line-height: 22px;
-			    width: 328px;
-			    height: 24px;
+			form {
+			    position: relative;
+
+				input {
+					font-size: 16px;
+				    line-height: 22px;
+				    width: 278px;
+				    height: 24px;
+				    padding: 2px 30px 2px 10px;
+				}
+				button {
+				    background: url("../images/search-icon-th.png") center/contain no-repeat;
+				    border: none;
+				    position: absolute;
+				    right: 6px;
+				    width: 20px;
+				    height: 20px;
+				    top: 5px;
+				    padding: 0;
+				    outline: none;
+				    cursor: pointer;
+				}
 			}
 		}
+
 
 		#nav-buttons {
 			width: 100%;
