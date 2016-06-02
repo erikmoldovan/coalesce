@@ -43,26 +43,27 @@ var Header = React.createClass({
     		<nav id="main-menu">
     			<nav id="search">
             <form name="zipForm" onSubmit={this.zipChange}>
-    				  <input id="search-bar" type="text" name="search-bar" minlength="5" maxlength="9" ref="input" />
-              <input type="submit" />
+    				  <input id="search-bar" type="text" name="search-bar" minlength="5" maxlength="9" ref="input" placeholder="Enter Zipcode"/>
+              <button type="submit">x</button>
             </form>
     			</nav>
-    			<div id="nav-buttons">
-    				<a href="#" className="menu1">Menu 1</a>
-    				<a href="#" className="menu2">Menu 2</a>
-    				<a href="#" className="menu3">Menu 3</a>
-    				<a href="#" className="menu4">Menu 4</a>
-    				<a href="#" className="menu5">Menu 5</a>
-    			</div>
-    		</nav>
-    		<div id="login">
-    			<a href="#">Login/Logout</a>
-    		</div>
+        </nav>
     	</header>
     )
   }
 });
 
+        //   <div id="nav-buttons">
+        //     <a href="#" className="menu1">Menu 1</a>
+        //     <a href="#" className="menu2">Menu 2</a>
+        //     <a href="#" className="menu3">Menu 3</a>
+        //     <a href="#" className="menu4">Menu 4</a>
+        //     <a href="#" className="menu5">Menu 5</a>
+        //   </div>
+        // </nav>
+        // <div id="login">
+        //   <a href="#">Login/Logout</a>
+        // </div>
 var TopViewNav = React.createClass({ 
   displayName: "TopViewNav",
   render: function(){
