@@ -174,8 +174,6 @@ var PageRender = React.createClass({
   componentDidMount: function() {
     this.getMeetupResults("98122");
 
-    var x = document.getElementById("location");
-
     function requestCurrentPosition(){
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(useGeoData);
