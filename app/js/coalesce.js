@@ -163,6 +163,20 @@ var PageRender = React.createClass({
   },
   componentDidMount: function() {
     this.MeetUpResults("98122");
+
+    var x = document.getElementById("location");
+
+    function requestCurrentPosition(){
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(useGeoData);
+      }
+    }
+
+    function useGeoData(position){
+      console.log(position);
+    };
+
+    requestCurrentPosition();
   },
   clickHandler: function(newSelectedEventIndex) {
     console.log("clicked!", newSelectedEventIndex);
