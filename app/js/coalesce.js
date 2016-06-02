@@ -30,34 +30,20 @@ class MapWrapper extends React.Component {
 }
 
 var Header = React.createClass({
-  getInitialState: function() {
-    return {
-      zipCode: '',
-    }
-  },
   displayName: "Header",
-
-  zipInput: function(zipCallback) {
-    this.setState({zipCode: zipCallback.target.value});
-  },
   zipChange: function(e) {
     e.preventDefault();
-    console.log(e);
-    this.setState({selectedZip: zipCode});
-    console.log(this.state.selectedZip);
-  },
-  componentDidMount: function() {      
-    this.setState({zipCode: this.props.selectedZip});  
+    var newZipCode = this.refs.input.value;
+    this.props.zipCallback(newZipCode);
   },
   render: function(){
-
     return (
     	<header id="main-header">
     		<div id="logo"></div>
     		<nav id="main-menu">
     			<nav id="search">
-            <form onSubmit={this.zipChange}>
-    				  <input id="search-bar" type="textbox" name="search-bar" minlength="5" maxlength="9" />
+            <form name="zipForm" onSubmit={this.zipChange}>
+    				  <input id="search-bar" type="text" name="search-bar" minlength="5" maxlength="9" ref="input" />
               <input type="submit" />
             </form>
     			</nav>
@@ -170,7 +156,7 @@ var PageRender = React.createClass({
       }
     };
   },
-  MeetUpResults: function(zip) {
+  getMeetupResults: function(zip) {
     var url = "http://localhost:9000/api/getEvents?zip=" + zip;
     $.ajax({
       url: url,
@@ -185,7 +171,7 @@ var PageRender = React.createClass({
     });
   },
   componentDidMount: function() {
-    this.MeetUpResults("98122");
+    this.getMeetupResults("98122");
 
     var x = document.getElementById("location");
 
@@ -203,7 +189,8 @@ var PageRender = React.createClass({
   },
   zipCallback: function(selectedZip) {
     console.log("clicked!", selectedZip);
-    this.setState({selectedZip: zipCallback})
+    // this.setState({selectedZip: selectedZip});
+    this.getMeetupResults(selectedZip);
   },
   clickHandler: function(newSelectedEventIndex) {
     console.log("clicked!", newSelectedEventIndex);
