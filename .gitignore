@@ -3,3 +3,4 @@ app/libraries
 app/css/*.css
 *.css
 app/gallery_info.json
+api/key.txt

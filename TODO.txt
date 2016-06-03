@@ -1,0 +1,41 @@
+** Header **
+- Fix styling for input box
+- Fix styling for button
+- Modify input to take zip or city
+- Modify logo to include name
+- Zip code validation on submit
+- Refresh button
+- "Currently searching for events near "
+
+** Sidebar **
+- Style selected meetup section
+- Style list section
+- Add link to meetup event page in selected meetup section
+- Display additional data about the meetup in the list+selected, such as # of RSVPs
+- Pagination of the list section
+- Truncate description with elipsis and Read More link at end
+- Link location to google maps
+- Create add to Calendar link?
+- Numbers in list (must match markers)
+- Empty state for selection meetup section
+- Change color of events that have been visited
+
+** Map **
+- Place markers according to events in list
+- Center map on marker click and highlight marker
+- Change color of markers that have been visited
+= Pump selected event info into popup bubble
+- Experiment with map colors/templates
+- Convert leaflet code to React-appropriate style
+- Number in markers
+- On app load, center on US and zoom out to appropriate distance (no marker)
+
+** App Behavior (Integration/Tying it all together) **
+- Zip code look for lat/long (for centering map)
+- Also, city lookup for lat/long (for centering map)
+- Center map on list item selection and highlight marker
+- On marker click, select list item and highlight
+XXXXX Abstract API key from server code
+
+** Mobile & Tablet
+- Ugh...
