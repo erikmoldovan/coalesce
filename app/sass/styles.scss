@@ -116,6 +116,11 @@ a {
 				    padding: 0;
 				    outline: none;
 				    cursor: pointer;
+				    transition: background-image 0.25s;
+
+				    &:hover {
+					    background-image: url("../images/search-icon-th-h.png");
+					}
 				}
 			}
 		}
