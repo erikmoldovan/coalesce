@@ -1,11 +1,6 @@
 ** Header **
-- Fix styling for input box
-- Fix styling for button
 - Modify input to take zip or city
-- Modify logo to include name
 - Zip code validation on submit
-- Refresh button
-- "Currently searching for events near "
 
 ** Sidebar **
 - Style selected meetup section
@@ -26,7 +21,6 @@
 - Change color of markers that have been visited
 = Pump selected event info into popup bubble
 - Experiment with map colors/templates
-- Convert leaflet code to React-appropriate style
 - Number in markers
 - On app load, center on US and zoom out to appropriate distance (no marker)
 
@@ -35,7 +29,8 @@
 - Also, city lookup for lat/long (for centering map)
 - Center map on list item selection and highlight marker
 - On marker click, select list item and highlight
-XXXXX Abstract API key from server code
+- "Currently searching for events near " && progress/loading indicator
+- Geolocation
 
 ** Mobile & Tablet
 - Ugh...

@@ -29,14 +29,16 @@ class MapWrapper extends React.Component {
   }
 }
 
-var Header = React.createClass({
-  displayName: "Header",
-  zipChange: function(e) {
+class Header extends React.Component {
+  displayName: "Header"
+
+  zipChange(e) {
     e.preventDefault();
     var newZipCode = this.refs.input.value;
     this.props.zipCallback(newZipCode);
-  },
-  render: function(){
+  }
+
+  render() {
     return (
     	<header id="main-header">
     		<div id="logo"></div>
@@ -51,22 +53,12 @@ var Header = React.createClass({
     	</header>
     )
   }
-});
+}
 
-        //   <div id="nav-buttons">
-        //     <a href="#" className="menu1">Menu 1</a>
-        //     <a href="#" className="menu2">Menu 2</a>
-        //     <a href="#" className="menu3">Menu 3</a>
-        //     <a href="#" className="menu4">Menu 4</a>
-        //     <a href="#" className="menu5">Menu 5</a>
-        //   </div>
-        // </nav>
-        // <div id="login">
-        //   <a href="#">Login/Logout</a>
-        // </div>
-var TopViewNav = React.createClass({ 
-  displayName: "TopViewNav",
-  render: function(){
+class TopViewNav extends React.Component { 
+  displayName: "TopViewNav"
+
+  render() {
     var selectedEvent = this.props.data.results[this.props.selectedItemIndex];
     if (selectedEvent === undefined) {
       return (<div></div>);
@@ -92,10 +84,10 @@ var TopViewNav = React.createClass({
         )
       }
     }
-});
+}
 
-var ShowList = React.createClass({
-  render: function(){
+class ShowList extends React.Component {
+  render() {
     var that = this;
     var listItems = this.props.data.results.map(function(EventItem, index){
       var selectedClass = "";
@@ -110,18 +102,18 @@ var ShowList = React.createClass({
       </div>
     )
   }
-});
+}
 
-var Event = React.createClass({
-  render: function() {
-  var EventItem = this.props.data;
-  var classes = "event-item" + this.props.selectedClass
-  var dur = EventItem.duration === undefined ? 0 : EventItem.duration + EventItem.time;
-  var CalDate = moment(EventItem.time).format("dddd, MMMM DD, YYYY");
-  var Time = moment(EventItem.time).format("h:mm A");
-  var Duration = dur === 0 ? "" : " to " + moment(dur).format("h:mm A");
-  let boundClick = this.props.clickHandler.bind(null, this.props.index);
-    return (
+class Event extends React.Component {
+  render() {
+    var EventItem = this.props.data;
+    var classes = "event-item" + this.props.selectedClass
+    var dur = EventItem.duration === undefined ? 0 : EventItem.duration + EventItem.time;
+    var CalDate = moment(EventItem.time).format("dddd, MMMM DD, YYYY");
+    var Time = moment(EventItem.time).format("h:mm A");
+    var Duration = dur === 0 ? "" : " to " + moment(dur).format("h:mm A");
+    let boundClick = this.props.clickHandler.bind(null, this.props.index);
+      return (
         <div className={classes} onClick={boundClick}>
           <div className="item-wrapper">
             <div className="title">{EventItem.name}</div>
@@ -132,33 +124,38 @@ var Event = React.createClass({
           </div>
         </div>
       )
-  }
-});
+    }
+}
 
-var BottomViewNav = React.createClass({	
-  displayName: "BottomViewNav",
-  render: function(){
+class BottomViewNav extends React.Component {	
+  displayName: "BottomViewNav"
+
+  render() {
     return (
-		<div id="bottom-view-nav">
-        	<ShowList data={this.props.data} clickHandler={this.props.clickHandler} selectedItemIndex={this.props.selectedItemIndex} />
-		</div>
+  		<div id="bottom-view-nav">
+        <ShowList data={this.props.data} clickHandler={this.props.clickHandler} selectedItemIndex={this.props.selectedItemIndex} />
+  		</div>
     )
   }
-});
+}
 
-var PageRender = React.createClass({
-  displayName: "PageRender",
-  getInitialState: function() {
-    return {
+class PageRender extends React.Component {
+  displayName: "PageRender"
+
+  constructor() {
+    super();
+    this.state = {
       selectedZip: '98122',
       selectedItemIndex: 0,
       data: {
       	results: []
       }
     };
-  },
-  getMeetupResults: function(zip) {
+  }
+
+  getMeetupResults(zip) {
     var url = "http://localhost:9000/api/getEvents?zip=" + zip;
+
     $.ajax({
       url: url,
       dataType: 'json',
@@ -170,32 +167,34 @@ var PageRender = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
-  },
-  componentDidMount: function() {
+  }
+
+  componentDidMount() {
     this.getMeetupResults("98122");
 
     function requestCurrentPosition(){
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(useGeoData);
       }
-    }
+    };
 
     function useGeoData(position){
       console.log(position);
     };
+  }
 
-    requestCurrentPosition();
-  },
-  zipCallback: function(selectedZip) {
+  zipCallback(selectedZip) {
     console.log("clicked!", selectedZip);
     // this.setState({selectedZip: selectedZip});
     this.getMeetupResults(selectedZip);
-  },
-  clickHandler: function(newSelectedEventIndex) {
+  }
+
+  clickHandler(newSelectedEventIndex) {
     console.log("clicked!", newSelectedEventIndex);
     this.setState({selectedItemIndex: newSelectedEventIndex});
-  },
-  render: function(){
+  }
+
+  render() {
     return (
     	<div id="body-wrapper">
 	    	<Header zipCallback={this.zipCallback} selectedZip={this.state.selectedZip}/>
@@ -209,6 +208,6 @@ var PageRender = React.createClass({
 		</div>
     )
   }
-});
+}
 
 ReactDOM.render(<PageRender/>, document.getElementById('react-wrapper'));
