@@ -30,19 +30,3 @@ P Zip code validation on submit
 
 ** Mobile & Tablet
 - Ugh...
-
-
-11374-1023
-
-if (input.hasNumber) {
-	if (input.length === 5 or input.length === 9) {
-	   input.type = zip;
-	} else {
-		throw error;
-	}
-} 
-else if (input.hasString) {
-	 input.type = city;
-} else {
-	throw error;
-}

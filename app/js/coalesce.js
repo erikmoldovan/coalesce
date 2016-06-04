@@ -14,19 +14,14 @@ class MapWrapper extends React.Component {
     render() {
         var centerUSPosition = [this.state.lat, this.state.lng];
 
-        console.log(this.props.data.results);
-
-        var markers = this.props.data.results.map(function(EventItem, index) {
-            if (EventItem.venue !== null && EventItem.venue !== undefined) {
-                // console.log(EventItem);
-                return (
-                    <Marker position={[EventItem.venue.lat, EventItem.venue.lon]} key={index}>
-                        <Popup>
-                            <span className="marker_text"><span className="title">{EventItem.name}<br/>{EventItem.venue.name || ""}</span><br/>{EventItem.venue.address_1 || ""} {EventItem.venue.address_2 || ""} {EventItem.venue.address_3 || ""}, {EventItem.venue.city}, {EventItem.venue.state}</span>
-                        </Popup>
-                    </Marker>
-                );
-            }
+        var markers = this.props.markers.results.map(function(EventItem, index) {
+            return (
+                <Marker position={[EventItem.venue.lat, EventItem.venue.lon]} key={index}>
+                    <Popup>
+                        <span className="marker_text"><span className="title">{EventItem.name}<br/>{EventItem.venue.name || ""}</span><br/>{EventItem.venue.address_1 || ""} {EventItem.venue.address_2 || ""} {EventItem.venue.address_3 || ""}, {EventItem.venue.city}, {EventItem.venue.state}</span>
+                    </Popup>
+                </Marker>
+            );
         });
 
         return (
@@ -189,7 +184,15 @@ class PageRender extends React.Component {
             dataType: 'json',
             cache: false,
             success: function(data) {
-                this.setState({ events: data });
+                var events = [];
+
+                data.results.forEach(function(EventItem, index) {
+                    if (EventItem.venue !== null && EventItem.venue !== undefined) {
+                        events.push(EventItem);
+                    }
+                });
+
+                this.setState({ events: { results: events } });
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -225,7 +228,7 @@ class PageRender extends React.Component {
             <div id="body-wrapper">
                 <Header searchCallback={this.searchCallback} searchInput={this.state.searchInput}/>
                 <div id="main-wrapper">
-                    <main><div id="mapid"><MapWrapper data={this.state.events} /></div></main>
+                    <main><div id="mapid"><MapWrapper markers={this.state.events} /></div></main>
                     <aside id="content-nav">
                         <TopViewNav data={this.state.events} selectedItemIndex={this.state.selectedItemIndex}/>
                         <BottomViewNav data={this.state.events} clickHandler={this.clickHandler} selectedItemIndex={this.state.selectedItemIndex}/>
