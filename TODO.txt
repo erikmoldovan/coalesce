@@ -22,7 +22,6 @@
 = Pump selected event info into popup bubble
 - Experiment with map colors/templates
 - Number in markers
-- On app load, center on US and zoom out to appropriate distance (no marker)
 
 ** App Behavior (Integration/Tying it all together) **
 - Zip code look for lat/long (for centering map)

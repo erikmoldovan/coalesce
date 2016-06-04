@@ -5,20 +5,22 @@ class MapWrapper extends React.Component {
     constructor() {
         super();
         this.state = {
-          lat: 47.6081392,
-          lng: -122.3313049,
-          zoom: 13,
+          lat: 39.8282,
+          lng: -98.5795,
+          zoom: 4,
         };
     }
 
     render() {
-        const position = [this.state.lat, this.state.lng];
+        var position = [this.state.lat, this.state.lng];
 
         return (
             <Map center={position} zoom={this.state.zoom}>
                 <TileLayer
-                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                  url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+                    attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+                    url='http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
+                    subdomains: 'abcd'
+                    maxZoom: 19
                 />
                 <Marker position={position}>
                     <Popup>
@@ -94,7 +96,7 @@ class ShowList extends React.Component {
         var that = this;
         var listItems = this.props.data.results.map(function(EventItem, index){
             var selectedClass = "";
-            
+
             if (index === that.props.selectedItemIndex) {
                 selectedClass = " selected";
             }
@@ -167,6 +169,7 @@ class PageRender extends React.Component {
             dataType: 'json',
             cache: false,
             success: function(data) {
+                console.log(this);
                 this.setState({ data: data });
             }.bind(this),
             error: function(xhr, status, err) {
