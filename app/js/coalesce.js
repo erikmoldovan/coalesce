@@ -35,10 +35,15 @@ class MapWrapper extends React.Component {
 class Header extends React.Component {
     displayName: "Header"
 
-    zipChange(e) {
-        e.preventDefault();
-        var newZipCode = this.refs.input.value;
-        this.props.zipCallback(newZipCode);
+    constructor() {
+        super();
+        this.searchSubmit = this.searchSubmit.bind(this);
+    }
+
+    searchSubmit(evt) {
+        evt.preventDefault();
+        var newSearchInput = this.refs.input.value;
+        this.props.searchCallback(newSearchInput);
     }
 
     render() {
@@ -47,8 +52,8 @@ class Header extends React.Component {
                 <div id="logo"></div>
                 <nav id="main-menu">
                     <nav id="search">
-                        <form name="zipForm" onSubmit={this.zipChange}>
-                            <input id="search-bar" type="text" name="search-bar" minlength="5" maxlength="9" ref="input" placeholder="Enter Zipcode"/>
+                        <form name="zipForm" onSubmit={this.searchSubmit}>
+                            <input id="search-bar" type="text" name="search-bar" minlength="5" maxlength="9" ref="input" placeholder="Enter a city or zip code"/>
                             <button type="submit" form="zipForm" value="Submit"></button>
                         </form>
                     </nav>
@@ -153,12 +158,14 @@ class PageRender extends React.Component {
     constructor() {
         super();
         this.state = {
-            selectedZip: '98122',
+            searchInput: undefined,
             selectedItemIndex: 0,
             data: {
                 results: []
             }
         };
+        this.clickHandler = this.clickHandler.bind(this);
+        this.searchCallback = this.searchCallback.bind(this);
     }
 
     getMeetupResults(zip) {
@@ -169,7 +176,6 @@ class PageRender extends React.Component {
             dataType: 'json',
             cache: false,
             success: function(data) {
-                console.log(this);
                 this.setState({ data: data });
             }.bind(this),
             error: function(xhr, status, err) {
@@ -192,21 +198,19 @@ class PageRender extends React.Component {
         };
     }
 
-    zipCallback(selectedZip) {
-        console.log("clicked!", selectedZip);
-        // this.setState({selectedZip: selectedZip});
-        this.getMeetupResults(selectedZip);
+    searchCallback(searchInput) {
+        console.log("clicked!", searchInput);
+        this.getMeetupResults(searchInput);
     }
 
     clickHandler(newSelectedEventIndex) {
-        console.log("clicked!", newSelectedEventIndex);
         this.setState({selectedItemIndex: newSelectedEventIndex});
     }
 
     render() {
         return (
             <div id="body-wrapper">
-                <Header zipCallback={this.zipCallback} selectedZip={this.state.selectedZip}/>
+                <Header searchCallback={this.searchCallback} searchInput={this.state.searchInput}/>
                 <div id="main-wrapper">
                     <main><div id="mapid"><MapWrapper /></div></main>
                     <aside id="content-nav">
