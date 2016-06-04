@@ -20,7 +20,6 @@
 - Center map on marker click and highlight marker
 - Change color of markers that have been visited
 = Pump selected event info into popup bubble
-- Experiment with map colors/templates
 - Number in markers
 
 ** App Behavior (Integration/Tying it all together) **
