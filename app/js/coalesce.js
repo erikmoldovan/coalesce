@@ -7,26 +7,39 @@ class MapWrapper extends React.Component {
         this.state = {
           lat: 39.8282,
           lng: -98.5795,
-          zoom: 4,
+          zoom: 4
         };
     }
 
     render() {
-        var position = [this.state.lat, this.state.lng];
+        var centerUSPosition = [this.state.lat, this.state.lng];
+
+        var markers = this.props.data.results.map(function(EventItem, index) {
+            if (EventItem.venue !== null && EventItem.venue !== undefined) {
+                console.log(EventItem);
+                return (
+                    <Marker position={[EventItem.venue.lat, EventItem.venue.lon]} key={index}>
+                        <Popup>
+                            <span>A pretty CSS3 popup. <br/> Easily customizable.</span>
+                        </Popup>
+                    </Marker>
+                );
+            }
+
+            return;
+        });
+
+        console.log(markers);
 
         return (
-            <Map center={position} zoom={this.state.zoom}>
+            <Map center={centerUSPosition} zoom={this.state.zoom}>
                 <TileLayer
                     attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
                     url='http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
                     subdomains='abcd'
                     maxZoom='19'
                 />
-                <Marker position={position}>
-                    <Popup>
-                        <span>A pretty CSS3 popup. <br/> Easily customizable.</span>
-                    </Popup>
-                </Marker>
+                {markers}
             </Map>
         );
     }
@@ -146,7 +159,7 @@ class BottomViewNav extends React.Component {
     render() {
         return (
             <div id="bottom-view-nav">
-            <ShowList data={this.props.data} clickHandler={this.props.clickHandler} selectedItemIndex={this.props.selectedItemIndex} />
+                <ShowList data={this.props.data} clickHandler={this.props.clickHandler} selectedItemIndex={this.props.selectedItemIndex} />
             </div>
         )
     }
@@ -160,7 +173,7 @@ class PageRender extends React.Component {
         this.state = {
             searchInput: undefined,
             selectedItemIndex: 0,
-            data: {
+            events: {
                 results: []
             }
         };
@@ -168,15 +181,16 @@ class PageRender extends React.Component {
         this.searchCallback = this.searchCallback.bind(this);
     }
 
-    getMeetupResults(zip) {
-        var url = "http://localhost:9000/api/getEvents?zip=" + zip;
+    getMeetupResults(searchArea) {
+        console.log("searchArea:", searchArea);
+        var url = "http://localhost:9000/api/getOpenEvents?searchArea=" + searchArea;
 
         $.ajax({
             url: url,
             dataType: 'json',
             cache: false,
             success: function(data) {
-                this.setState({ data: data });
+                this.setState({ events: data });
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -212,10 +226,10 @@ class PageRender extends React.Component {
             <div id="body-wrapper">
                 <Header searchCallback={this.searchCallback} searchInput={this.state.searchInput}/>
                 <div id="main-wrapper">
-                    <main><div id="mapid"><MapWrapper /></div></main>
+                    <main><div id="mapid"><MapWrapper data={this.state.events} /></div></main>
                     <aside id="content-nav">
-                        <TopViewNav data={this.state.data} selectedItemIndex={this.state.selectedItemIndex}/>
-                        <BottomViewNav data={this.state.data} clickHandler={this.clickHandler} selectedItemIndex={this.state.selectedItemIndex}/>
+                        <TopViewNav data={this.state.events} selectedItemIndex={this.state.selectedItemIndex}/>
+                        <BottomViewNav data={this.state.events} clickHandler={this.clickHandler} selectedItemIndex={this.state.selectedItemIndex}/>
                     </aside>
                 </div>
             </div>

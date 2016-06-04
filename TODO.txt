@@ -16,7 +16,6 @@
 - Change color of events that have been visited
 
 ** Map **
-- Place markers according to events in list
 - Center map on marker click and highlight marker
 - Change color of markers that have been visited
 = Pump selected event info into popup bubble
@@ -32,3 +31,19 @@
 
 ** Mobile & Tablet
 - Ugh...
+
+
+11374-1023
+
+if (input.hasNumber) {
+	if (input.length === 5 or input.length === 9) {
+	   input.type = zip;
+	} else {
+		throw error;
+	}
+} 
+else if (input.hasString) {
+	 input.type = city;
+} else {
+	throw error;
+}

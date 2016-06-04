@@ -42,11 +42,25 @@ var initApp = function() {
 	    res.json({ message: 'hooray! welcome to our api!' });
 	});
 
-	router.get('/getEvents', function(req, res) {
-		console.log(req.query.zip);
-	    meetup.getOpenEvents({
-			zip: req.query.zip
-		}, function(error, events) {
+	router.get('/getOpenEvents', function(req, res) {
+		var input = req.query.searchArea;
+
+		var isZip = /^\d+$/.test(input);
+		var searchCriteria = {};
+
+		if (isZip) {
+			if (input.length === 5 || input.length === 9) {
+			   searchCriteria.zip = input;
+			} else {
+				throw error;
+			}
+		} else if (!isZip) {
+			 searchCriteria.city = input;
+		} else {
+			throw error;
+		}
+
+	    meetup.getOpenEvents(searchCriteria, function(error, events) {
 			if (error) {
 				console.log(error);
 			} else {
