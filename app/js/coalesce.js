@@ -89,6 +89,7 @@ class TopViewNav extends React.Component {
             var Duration = dur === 0 ? "" : " to " + moment(dur).format("h:mm A");
             var venue = selectedEvent.venue !== undefined ? selectedEvent.venue : {};
 
+            var description = selectedEvent.description.replace(/<img[^>]*>/g,"");
             return (
                 <div id="top-view-nav">
                     <div className="event-name"><a href={selectedEvent.event_url} target="_blank">{selectedEvent.name}</a></div>
@@ -100,7 +101,7 @@ class TopViewNav extends React.Component {
                         <div className="location-name">{venue.name || ""}</div>
                         <div className="location-address">{venue.address_1 || ""} {venue.address_2 || ""} {venue.address_3 || ""}, {venue.city}, {venue.state}</div>
                     </div>
-                    <div className="event-description">{selectedEvent.description}</div>
+                    <div className="event-description" dangerouslySetInnerHTML={{__html: description}} />
                 </div>
             )
         }
