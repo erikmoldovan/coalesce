@@ -17,14 +17,12 @@ P Zip code validation on submit
 ** Map **
 - Center map on marker click and highlight marker
 - Change color of markers that have been visited
-= Pump selected event info into popup bubble
 - Number in markers
 
 ** App Behavior (Integration/Tying it all together) **
 - Zip code look for lat/long (for centering map)
 - Also, city lookup for lat/long (for centering map)
 - Center map on list item selection and highlight marker
-- On marker click, select list item and highlight
 - "Currently searching for events near " && progress/loading indicator
 - Geolocation
 
