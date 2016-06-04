@@ -22,7 +22,7 @@ class MapWrapper extends React.Component {
                 return (
                     <Marker position={[EventItem.venue.lat, EventItem.venue.lon]} key={index}>
                         <Popup>
-                            <span>A pretty CSS3 popup. <br/> Easily customizable.</span>
+                            <span className="marker_text"><span className="title">{EventItem.name}<br/>{EventItem.venue.name || ""}</span><br/>{EventItem.venue.address_1 || ""} {EventItem.venue.address_2 || ""} {EventItem.venue.address_3 || ""}, {EventItem.venue.city}, {EventItem.venue.state}</span>
                         </Popup>
                     </Marker>
                 );

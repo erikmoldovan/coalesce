@@ -214,6 +214,16 @@ a {
 			#map1 {
 				width: 100%;
 				height: 100%;
+
+				.marker_text {
+					color: #333;
+					line-height: 16px;
+
+					.title {
+						font-size: 13px;
+						font-weight: bold;
+					}
+				}
 			}
 		}
 	}
