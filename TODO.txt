@@ -1,11 +1,10 @@
 ** Header **
-- Modify input to take zip or city
-- Zip code validation on submit
+P Modify input to take zip or city
+P Zip code validation on submit
 
 ** Sidebar **
 - Style selected meetup section
 - Style list section
-- Add link to meetup event page in selected meetup section
 - Display additional data about the meetup in the list+selected, such as # of RSVPs
 - Pagination of the list section
 - Truncate description with elipsis and Read More link at end

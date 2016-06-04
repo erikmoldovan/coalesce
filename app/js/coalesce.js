@@ -14,9 +14,11 @@ class MapWrapper extends React.Component {
     render() {
         var centerUSPosition = [this.state.lat, this.state.lng];
 
+        console.log(this.props.data.results);
+
         var markers = this.props.data.results.map(function(EventItem, index) {
             if (EventItem.venue !== null && EventItem.venue !== undefined) {
-                console.log(EventItem);
+                // console.log(EventItem);
                 return (
                     <Marker position={[EventItem.venue.lat, EventItem.venue.lon]} key={index}>
                         <Popup>
@@ -25,11 +27,7 @@ class MapWrapper extends React.Component {
                     </Marker>
                 );
             }
-
-            return;
         });
-
-        console.log(markers);
 
         return (
             <Map center={centerUSPosition} zoom={this.state.zoom}>
@@ -93,7 +91,7 @@ class TopViewNav extends React.Component {
 
             return (
                 <div id="top-view-nav">
-                    <div className="event-name">{selectedEvent.name}</div>
+                    <div className="event-name"><a href={selectedEvent.event_url} target="_blank">{selectedEvent.name}</a></div>
                     <div className="event-date-time">
                         <div className="event-date">{CalDate}</div>
                         <div className="event-time">{Time}{Duration}</div>
