@@ -6,10 +6,8 @@ P Zip code validation on submit
 - Style selected meetup section
 - Style list section
 - Display additional data about the meetup in the list+selected, such as # of RSVPs
-- Pagination of the list section
-- Truncate description with elipsis and Read More link at end
-- Link location to google maps
-- Create add to Calendar link?
+P Pagination of the list section
+P Truncate description with elipsis and Read More link at end
 - Numbers in list (must match markers)
 - Empty state for selection meetup section
 - Change color of events that have been visited
@@ -22,7 +20,7 @@ P Zip code validation on submit
 ** App Behavior (Integration/Tying it all together) **
 - Zip code look for lat/long (for centering map)
 - Also, city lookup for lat/long (for centering map)
-- Center map on list item selection and highlight marker
+P Center map on list item selection and highlight marker
 - "Currently searching for events near " && progress/loading indicator
 - Geolocation
 

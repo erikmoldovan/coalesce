@@ -5,29 +5,40 @@ class MapWrapper extends React.Component {
     constructor() {
         super();
         this.state = {
-          lat: 39.8282,
-          lng: -98.5795,
-          zoom: 4
+            currentPosition: [
+                39.8282,
+                -98.5795
+            ],
+            zoom: 4
         };
     }
 
+    markerClickHandler(evt) {
+        console.log(evt, this);
+
+        this.state.currentPosition = [
+            evt.lat,
+            evt.lon
+        ];
+    }
+
     render() {
-        var centerUSPosition = [this.state.lat, this.state.lng];
+        console.log(this.state.currentPosition);
+        var centerUSPosition = this.state.currentPosition;
         var that = this;
+
         var markers = this.props.markers.results.map(function(EventItem, index) {
-          let boundClick = that.props.clickHandler.bind(null, index);
             return (
-                  <Marker position={[EventItem.venue.lat, EventItem.venue.lon]} key={index}  onClick={boundClick}>
-                      <Popup>
+                <Marker position={[EventItem.venue.lat, EventItem.venue.lon]} key={index} onClick={that.markerClickHandler}>
+                    <Popup>
                         <span className="marker_text"><span className="title">{EventItem.name}<br/>{EventItem.venue.name || ""}</span><br/>{EventItem.venue.address_1 || ""} {EventItem.venue.address_2 || ""} {EventItem.venue.address_3 || ""}, {EventItem.venue.city}, {EventItem.venue.state}</span>
                     </Popup>
                 </Marker>
             );
-            console.log(boundClick);
         });
 
         return (
-            <Map center={centerUSPosition} zoom={this.state.zoom}>
+            <Map center={this.state.currentPosition} zoom={this.state.zoom}>
                 <TileLayer
                     attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
                     url='http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
@@ -37,6 +48,21 @@ class MapWrapper extends React.Component {
                 {markers}
             </Map>
         );
+
+        var listItems = this.props.data.results.map(function(EventItem, index){
+            var selectedClass = "";
+
+            if (index === that.props.selectedItemIndex) {
+                selectedClass = " selected";
+            }
+            return <Event key={index} selectedClass={selectedClass} data={EventItem} index={index} clickHandler={that.props.clickHandler}/>;
+        });
+
+        return (
+            <div>
+                {listItems}
+            </div>
+        )
     }
 }
 
@@ -107,21 +133,7 @@ class TopViewNav extends React.Component {
 
 class ShowList extends React.Component {
     render() {
-        var that = this;
-        var listItems = this.props.data.results.map(function(EventItem, index){
-            var selectedClass = "";
-
-            if (index === that.props.selectedItemIndex) {
-                selectedClass = " selected";
-            }
-            return <Event key={index} selectedClass={selectedClass} data={EventItem} index={index} clickHandler={that.props.clickHandler}/>;
-        });
-
-        return (
-            <div>
-                {listItems}
-            </div>
-        )
+        
     }
 }
 
@@ -152,12 +164,26 @@ class Event extends React.Component {
 class BottomViewNav extends React.Component {   
     displayName: "BottomViewNav"
 
+
+
     render() {
+        var that = this;
+        var listItems = this.props.data.results.map(function(EventItem, index){
+            var selectedClass = "";
+
+            if (index === that.props.selectedItemIndex) {
+                selectedClass = " selected";
+            }
+            return <Event key={index} selectedClass={selectedClass} data={EventItem} index={index} clickHandler={that.props.clickHandler}/>;
+        });
+
         return (
             <div id="bottom-view-nav">
-                <ShowList data={this.props.data} clickHandler={this.props.clickHandler} selectedItemIndex={this.props.selectedItemIndex} />
+                {listItems}
             </div>
         )
+
+        // <ShowList data={this.props.data} clickHandler={this.props.clickHandler} selectedItemIndex={this.props.selectedItemIndex} />
     }
 }
 
@@ -217,7 +243,6 @@ class PageRender extends React.Component {
     }
 
     searchCallback(searchInput) {
-        console.log("clicked!", searchInput);
         this.getMeetupResults(searchInput);
     }
 
@@ -230,7 +255,7 @@ class PageRender extends React.Component {
             <div id="body-wrapper">
                 <Header searchCallback={this.searchCallback} searchInput={this.state.searchInput}/>
                 <div id="main-wrapper">
-                    <main><div id="mapid"><MapWrapper markers={this.state.events} clickHandler={this.clickHandler}/></div></main>
+                    <main><div id="mapid"><MapWrapper markers={this.state.events} clickHandler={this.clickHandler} selectedItemIndex={this.state.selectedItemIndex}/></div></main>
                     <aside id="content-nav">
                         <TopViewNav data={this.state.events} selectedItemIndex={this.state.selectedItemIndex}/>
                         <BottomViewNav data={this.state.events} clickHandler={this.clickHandler} selectedItemIndex={this.state.selectedItemIndex}/>
