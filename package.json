@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/moldyman/coalesce#readme",
   "devDependencies": {
+    "cities": "^1.1.2",
     "express": "^4.13.4",
     "gulp": "^3.9.1",
     "gulp-connect": "^4.0.0",

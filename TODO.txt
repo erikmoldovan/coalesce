@@ -1,14 +1,12 @@
 ** Sidebar **
 - Style selected meetup section
 - Style list section
-- Display additional data about the meetup in the list+selected, such as # of RSVPs
 P Pagination of the list section
 P Truncate description with elipsis and Read More link at end
 - Empty state for selection meetup section
 
 ** App Behavior (Integration/Tying it all together) **
 - Progress/loading indicator & Resetting defaults
-- Geolocation
 - Error Handling
 
 ** Mobile & Tablet

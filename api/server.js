@@ -7,7 +7,8 @@
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var fs         = require('fs');
-var zipcodes   = require('zipcodes');
+// var zipcodes   = require('zipcodes');
+var cities	   = require('cities');
 var meetup;
 
 fs.readFile('./api/key.txt', 'utf8', function read(err, data) {
@@ -26,9 +27,9 @@ var linkWithMeetup = function(key) {
 };
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 var port = process.env.PORT || 9000;        // set our port
@@ -44,9 +45,18 @@ var initApp = function() {
 	});
 
 	router.get('/getLatLong', function(req, res) {
-		var position = zipcodes.lookup(req.query.zip);
+		// var position = zipcodes.lookup(req.query.zip);
+		var position = cities.zip_lookup(req.query.zip);
+		console.log(position);
 
 		res.json(position);
+	});
+
+	router.get('/getZip', function(req, res) {
+		var zip = cities.gps_lookup(req.query.lat, req.query.lon);
+
+		console.log(zip);
+		res.json(zip);
 	});
 
 	router.get('/getOpenEvents', function(req, res) {

@@ -100,13 +100,14 @@ class Header extends React.Component {
     }
 
     render() {
+        console.log(this.props);
         return (
             <header id="main-header">
                 <div id="logo"></div>
                 <nav id="main-menu">
                     <nav id="search">
                         <form id="zipForm" name="zipForm" onSubmit={this.searchSubmit}>
-                            <input id="search-bar" type="text" name="search-bar" pattern="\d{5}?" maxLength="5" ref="input" placeholder="Enter a zip code"/>
+                            <input id="search-bar" value={this.props.searchInput} type="text" name="search-bar" pattern="\d{5}?" maxLength="5" ref="input" placeholder="Enter a zip code"/>
                             <button type="submit" form="zipForm" value="Submit"></button>
                         </form>
                     </nav>
@@ -218,17 +219,50 @@ class PageRender extends React.Component {
     }
 
     componentDidMount() {
-        function requestCurrentPosition(){
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(useGeoData);
-            }
-        };
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(useGeoData);
+        }
+
+        var that = this;
 
         function useGeoData(position){
-          console.log(position);
+            console.log(position.coords.latitude, position.coords.longitude);
+            var zip = that.getZip(position.coords.latitude, position.coords.longitude);
+            console.log('zip', zip);
+            that.setState({
+                centerPos: {
+                    lat: Number(position.coords.latitude),
+                    lon: Number(position.coords.longitude),
+                    zoom: 12
+                },
+                searchInput: zip
+            });
+            console.log('that', that);
         };
+    }
 
-        requestCurrentPosition();
+    getZip(lat, lon) {
+        var url = "http://localhost:9000/api/getZip?lat=" + lat + "&lon=" + lon;
+
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                // console.log(data);
+                // this.setState({
+                //     centerPos: {
+                //         lat: data.latitude,
+                //         lon: data.longitude,
+                //         zoom: 12
+                //     }
+                // });
+                console.log(data);
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
     }
 
     getLatLong(zip) {
@@ -241,8 +275,8 @@ class PageRender extends React.Component {
             success: function(data) {
                 this.setState({
                     centerPos: {
-                        lat: data.latitude,
-                        lon: data.longitude,
+                        lat: Number(data.latitude),
+                        lon: Number(data.longitude),
                         zoom: 12
                     }
                 });
