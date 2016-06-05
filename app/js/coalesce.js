@@ -131,12 +131,6 @@ class TopViewNav extends React.Component {
     }
 }
 
-class ShowList extends React.Component {
-    render() {
-        
-    }
-}
-
 class Event extends React.Component {
     render() {
         var EventItem = this.props.data;
@@ -163,8 +157,6 @@ class Event extends React.Component {
 
 class BottomViewNav extends React.Component {   
     displayName: "BottomViewNav"
-
-
 
     render() {
         var that = this;
