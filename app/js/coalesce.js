@@ -106,7 +106,7 @@ class Header extends React.Component {
                 <nav id="main-menu">
                     <nav id="search">
                         <form id="zipForm" name="zipForm" onSubmit={this.searchSubmit}>
-                            <input id="search-bar" type="text" name="search-bar" minlength="5" maxlength="9" ref="input" placeholder="Enter a city or zip code"/>
+                            <input id="search-bar" type="text" name="search-bar" pattern="\d{5}?" maxLength="5" ref="input" placeholder="Enter a zip code"/>
                             <button type="submit" form="zipForm" value="Submit"></button>
                         </form>
                     </nav>

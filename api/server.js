@@ -49,13 +49,14 @@ var initApp = function() {
 		var searchCriteria = {};
 
 		if (isZip) {
-			if (input.length === 5 || input.length === 9) {
+			if (input.length === 5/* || input.length === 9*/) {
 			   searchCriteria.zip = input;
 			} else {
 				throw error;
 			}
 		} else if (!isZip) {
-			 searchCriteria.city = input;
+			// searchCriteria.city = input;
+			throw error;
 		} else {
 			throw error;
 		}

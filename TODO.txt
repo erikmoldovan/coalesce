@@ -1,7 +1,3 @@
-** Header **
-P Modify input to take zip or city
-P Zip code validation on submit
-
 ** Sidebar **
 - Style selected meetup section
 - Style list section
@@ -12,9 +8,9 @@ P Truncate description with elipsis and Read More link at end
 
 ** App Behavior (Integration/Tying it all together) **
 - Zip code look for lat/long (for centering map)
-- Also, city lookup for lat/long (for centering map)
-- "Currently searching for events near " && progress/loading indicator
+- Progress/loading indicator & Resetting defaults
 - Geolocation
+- Error Handling
 
 ** Mobile & Tablet
 - Ugh...
