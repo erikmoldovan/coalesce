@@ -5,28 +5,53 @@ class MapWrapper extends React.Component {
     constructor() {
         super();
         this.state = {
-            currentPosition: [
-                39.8282,
-                -98.5795
-            ],
-            zoom: 4
+            position: {
+                default: {
+                    lat: 39.8282,
+                    lon: -98.5795,
+                    zoom: 4
+                },
+                current: {
+                    lat: 39.8282,
+                    lon: -98.5795,
+                    zoom: 4
+                }
+            }
         };
         this.markerClickHandler = this.markerClickHandler.bind(this);
     }
 
     markerClickHandler(evt) {
-        console.log(evt.target.options.listIndex);
-        this.setState({ 
-            currentPosition: [
-                evt.latlng.lat,
-                evt.latlng.lng
-            ],
-            zoom: 14
+        this.recenterMap(evt.latlng.lat, evt.latlng.lng, 14);
+    }
+
+    recenterMap(lat, lon, zoom) {
+        this.setState({
+            position: {
+                current: {
+                    lat: lat,
+                    lon: lon,
+                    zoom: zoom
+                }
+            }
         });
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.markers.results.length > 0) {
+            // this.recenterMap(nextProps.markers.results[0].venue.lat, nextProps.markers.results[0].venue.lon, 14)
+            nextState.position = {
+                current: {
+                    lat: nextProps.markers.results[0].venue.lat,
+                    lon: nextProps.markers.results[0].venue.lon,
+                    zoom: 14
+                }
+            }
+        }
+        return true;
+    }
+
     render() {
-        // console.log(this.state.currentPosition);
         var that = this;
 
         var markers = this.props.markers.results.map(function(EventItem, index) {
@@ -40,7 +65,7 @@ class MapWrapper extends React.Component {
         });
 
         return (
-            <Map center={this.state.currentPosition} zoom={this.state.zoom}>
+            <Map center={[this.state.position.current.lat, this.state.position.current.lon]} zoom={this.state.position.current.zoom}>
                 <TileLayer
                     attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
                     url='http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
