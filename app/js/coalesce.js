@@ -37,18 +37,10 @@ class MapWrapper extends React.Component {
         });
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    componentWillReceiveProps(nextProps) {
         if (nextProps.markers.results.length > 0) {
-            // this.recenterMap(nextProps.markers.results[0].venue.lat, nextProps.markers.results[0].venue.lon, 14)
-            nextState.position = {
-                current: {
-                    lat: nextProps.markers.results[0].venue.lat,
-                    lon: nextProps.markers.results[0].venue.lon,
-                    zoom: 14
-                }
-            }
+            this.recenterMap(nextProps.markers.results[0].venue.lat, nextProps.markers.results[0].venue.lon, 14)
         }
-        return true;
     }
 
     render() {
