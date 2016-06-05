@@ -7,6 +7,7 @@
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var fs         = require('fs');
+var zipcodes   = require('zipcodes');
 var meetup;
 
 fs.readFile('./api/key.txt', 'utf8', function read(err, data) {
@@ -40,6 +41,12 @@ var initApp = function() {
 	// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 	router.get('/', function(req, res) {
 	    res.json({ message: 'hooray! welcome to our api!' });
+	});
+
+	router.get('/getLatLong', function(req, res) {
+		var position = zipcodes.lookup(req.query.zip);
+
+		res.json(position);
 	});
 
 	router.get('/getOpenEvents', function(req, res) {

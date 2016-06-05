@@ -6,11 +6,6 @@ class MapWrapper extends React.Component {
         super();
         this.state = {
             position: {
-                default: {
-                    lat: 39.8282,
-                    lon: -98.5795,
-                    zoom: 4
-                },
                 current: {
                     lat: 39.8282,
                     lon: -98.5795,
@@ -38,8 +33,13 @@ class MapWrapper extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.markers.results.length > 0) {
-            this.recenterMap(nextProps.markers.results[0].venue.lat, nextProps.markers.results[0].venue.lon, 14)
+        // if (nextProps.markers.results.length > 0) {
+            // this.recenterMap(nextProps.markers.results[0].venue.lat, nextProps.markers.results[0].venue.lon, 14)
+        // }
+
+        if (nextProps.newCenter !== undefined) {
+            console.log(nextProps.newCenter);
+            this.recenterMap(nextProps.newCenter.lat, nextProps.newCenter.lon, nextProps.newCenter.zoom);
         }
     }
 
@@ -206,10 +206,51 @@ class PageRender extends React.Component {
             selectedItemIndex: 0,
             events: {
                 results: []
+            },
+            centerPos: {
+                lat: 39.8282,
+                lon: -98.5795,
+                zoom: 4
             }
         };
         this.clickHandler = this.clickHandler.bind(this);
         this.searchCallback = this.searchCallback.bind(this);
+    }
+
+    componentDidMount() {
+        function requestCurrentPosition(){
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(useGeoData);
+            }
+        };
+
+        function useGeoData(position){
+          console.log(position);
+        };
+
+        requestCurrentPosition();
+    }
+
+    getLatLong(zip) {
+        var url = "http://localhost:9000/api/getLatLong?zip=" + zip;
+
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                this.setState({
+                    centerPos: {
+                        lat: data.latitude,
+                        lon: data.longitude,
+                        zoom: 12
+                    }
+                });
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
     }
 
     getMeetupResults(searchArea) {
@@ -237,21 +278,8 @@ class PageRender extends React.Component {
         });
     }
 
-    componentDidMount() {
-        this.getMeetupResults("98122");
-
-        function requestCurrentPosition(){
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(useGeoData);
-            }
-        };
-
-        function useGeoData(position){
-          console.log(position);
-        };
-    }
-
     searchCallback(searchInput) {
+        this.getLatLong(searchInput);
         this.getMeetupResults(searchInput);
     }
 
@@ -264,7 +292,7 @@ class PageRender extends React.Component {
             <div id="body-wrapper">
                 <Header searchCallback={this.searchCallback} searchInput={this.state.searchInput}/>
                 <div id="main-wrapper">
-                    <main><div id="mapid"><MapWrapper markers={this.state.events} clickHandler={this.clickHandler} selectedItemIndex={this.state.selectedItemIndex}/></div></main>
+                    <main><div id="mapid"><MapWrapper markers={this.state.events} clickHandler={this.clickHandler} newCenter={this.state.centerPos} selectedItemIndex={this.state.selectedItemIndex}/></div></main>
                     <aside id="content-nav">
                         <TopViewNav data={this.state.events} selectedItemIndex={this.state.selectedItemIndex}/>
                         <BottomViewNav data={this.state.events} clickHandler={this.clickHandler} selectedItemIndex={this.state.selectedItemIndex}/>

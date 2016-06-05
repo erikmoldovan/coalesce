@@ -7,7 +7,6 @@ P Truncate description with elipsis and Read More link at end
 - Empty state for selection meetup section
 
 ** App Behavior (Integration/Tying it all together) **
-- Zip code look for lat/long (for centering map)
 - Progress/loading indicator & Resetting defaults
 - Geolocation
 - Error Handling
