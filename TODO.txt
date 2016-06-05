@@ -13,7 +13,7 @@ P Truncate description with elipsis and Read More link at end
 - Change color of events that have been visited
 
 ** Map **
-- Center map on marker click and highlight marker
+P Center map on marker click and highlight marker
 - Change color of markers that have been visited
 - Number in markers
 

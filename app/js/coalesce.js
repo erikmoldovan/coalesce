@@ -11,25 +11,27 @@ class MapWrapper extends React.Component {
             ],
             zoom: 4
         };
+        this.markerClickHandler = this.markerClickHandler.bind(this);
     }
 
     markerClickHandler(evt) {
-        console.log(evt, this);
-
-        this.state.currentPosition = [
-            evt.lat,
-            evt.lon
-        ];
+        console.log(evt.target.options.listIndex);
+        this.setState({ 
+            currentPosition: [
+                evt.latlng.lat,
+                evt.latlng.lng
+            ],
+            zoom: 14
+        });
     }
 
     render() {
-        console.log(this.state.currentPosition);
-        var centerUSPosition = this.state.currentPosition;
+        // console.log(this.state.currentPosition);
         var that = this;
 
         var markers = this.props.markers.results.map(function(EventItem, index) {
             return (
-                <Marker position={[EventItem.venue.lat, EventItem.venue.lon]} key={index} onClick={that.markerClickHandler}>
+                <Marker position={[EventItem.venue.lat, EventItem.venue.lon]} key={index} listIndex={index} onClick={that.markerClickHandler}>
                     <Popup>
                         <span className="marker_text"><span className="title">{EventItem.name}</span><br/>{EventItem.venue.name || ""}<br/>{EventItem.venue.address_1 || ""} {EventItem.venue.address_2 || ""} {EventItem.venue.address_3 || ""}, {EventItem.venue.city}, {EventItem.venue.state}</span>
                     </Popup>
