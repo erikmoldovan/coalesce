@@ -31,7 +31,7 @@ class MapWrapper extends React.Component {
             return (
                 <Marker position={[EventItem.venue.lat, EventItem.venue.lon]} key={index} onClick={that.markerClickHandler}>
                     <Popup>
-                        <span className="marker_text"><span className="title">{EventItem.name}<br/>{EventItem.venue.name || ""}</span><br/>{EventItem.venue.address_1 || ""} {EventItem.venue.address_2 || ""} {EventItem.venue.address_3 || ""}, {EventItem.venue.city}, {EventItem.venue.state}</span>
+                        <span className="marker_text"><span className="title">{EventItem.name}</span><br/>{EventItem.venue.name || ""}<br/>{EventItem.venue.address_1 || ""} {EventItem.venue.address_2 || ""} {EventItem.venue.address_3 || ""}, {EventItem.venue.city}, {EventItem.venue.state}</span>
                     </Popup>
                 </Marker>
             );
@@ -171,11 +171,9 @@ class BottomViewNav extends React.Component {
 
         return (
             <div id="bottom-view-nav">
-                {listItems}
+                <div>{listItems}</div>
             </div>
         )
-
-        // <ShowList data={this.props.data} clickHandler={this.props.clickHandler} selectedItemIndex={this.props.selectedItemIndex} />
     }
 }
 
