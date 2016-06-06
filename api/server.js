@@ -47,7 +47,6 @@ var initApp = function() {
 	router.get('/getLatLong', function(req, res) {
 		// var position = zipcodes.lookup(req.query.zip);
 		var position = cities.zip_lookup(req.query.zip);
-		console.log(position);
 
 		res.json(position);
 	});
@@ -55,7 +54,6 @@ var initApp = function() {
 	router.get('/getZip', function(req, res) {
 		var zip = cities.gps_lookup(req.query.lat, req.query.lon);
 
-		console.log(zip);
 		res.json(zip);
 	});
 

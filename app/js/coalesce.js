@@ -33,12 +33,7 @@ class MapWrapper extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // if (nextProps.markers.results.length > 0) {
-            // this.recenterMap(nextProps.markers.results[0].venue.lat, nextProps.markers.results[0].venue.lon, 14)
-        // }
-
         if (nextProps.newCenter !== undefined) {
-            console.log(nextProps.newCenter);
             this.recenterMap(nextProps.newCenter.lat, nextProps.newCenter.lon, nextProps.newCenter.zoom);
         }
     }
@@ -107,7 +102,7 @@ class Header extends React.Component {
                 <nav id="main-menu">
                     <nav id="search">
                         <form id="zipForm" name="zipForm" onSubmit={this.searchSubmit}>
-                            <input id="search-bar" value={this.props.searchInput} type="text" name="search-bar" pattern="\d{5}?" maxLength="5" ref="input" placeholder="Enter a zip code"/>
+                            <input id="search-bar" value={this.props.currentZip} type="text" name="search-bar" pattern="\d{5}?" maxLength="5" ref="input" placeholder="Enter a zip code"/>
                             <button type="submit" form="zipForm" value="Submit"></button>
                         </form>
                     </nav>
@@ -212,7 +207,8 @@ class PageRender extends React.Component {
                 lat: 39.8282,
                 lon: -98.5795,
                 zoom: 4
-            }
+            },
+            currentZip: undefined
         };
         this.clickHandler = this.clickHandler.bind(this);
         this.searchCallback = this.searchCallback.bind(this);
@@ -226,9 +222,7 @@ class PageRender extends React.Component {
         var that = this;
 
         function useGeoData(position){
-            console.log(position.coords.latitude, position.coords.longitude);
             var zip = that.getZip(position.coords.latitude, position.coords.longitude);
-            console.log('zip', zip);
             that.setState({
                 centerPos: {
                     lat: Number(position.coords.latitude),
@@ -237,7 +231,6 @@ class PageRender extends React.Component {
                 },
                 searchInput: zip
             });
-            console.log('that', that);
         };
     }
 
@@ -249,15 +242,11 @@ class PageRender extends React.Component {
             dataType: 'json',
             cache: false,
             success: function(data) {
-                // console.log(data);
-                // this.setState({
-                //     centerPos: {
-                //         lat: data.latitude,
-                //         lon: data.longitude,
-                //         zoom: 12
-                //     }
-                // });
-                console.log(data);
+                console.log(data.zipcode);
+                this.setState({
+                    currentZip: data.zipcode
+                });
+                this.getMeetupResults(data.zipcode);
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -324,7 +313,7 @@ class PageRender extends React.Component {
     render() {
         return (
             <div id="body-wrapper">
-                <Header searchCallback={this.searchCallback} searchInput={this.state.searchInput}/>
+                <Header searchCallback={this.searchCallback} searchInput={this.state.searchInput} currentZip={this.state.currentZip}/>
                 <div id="main-wrapper">
                     <main><div id="mapid"><MapWrapper markers={this.state.events} clickHandler={this.clickHandler} newCenter={this.state.centerPos} selectedItemIndex={this.state.selectedItemIndex}/></div></main>
                     <aside id="content-nav">
