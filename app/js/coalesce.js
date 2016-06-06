@@ -188,18 +188,15 @@ class BottomViewNav extends React.Component {
         super();
         this.state = {
             items: {
-                master: [],
                 paginated: []
             }
         };
         this.onChangePage = this.onChangePage.bind(this);
     }
     onChangePage (page) {
-      console.log("this stuff right here", this);
       var startIndex = (page * 10) - 10;
       var endIndex = startIndex + 9;
-      var paginated = this.state.items.master.slice(startIndex, endIndex);
-      console.log("page is" ,page);
+      var paginated = this.props.data.results.slice(startIndex, endIndex);
 
       this.setState({
         items: {
@@ -209,16 +206,12 @@ class BottomViewNav extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-      console.log("happy feet", nextProps);
       var paginated = nextProps.data.results.slice(0, 10)
       this.setState({
         items: {
-            master: nextProps.data.results,
             paginated: paginated
         }       
       });
-      console.log("this guy here", nextProps.data.results);
-      console.log("this other guy here", this.state.items.master);
     }
 
     render() {
