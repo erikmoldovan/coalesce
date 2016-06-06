@@ -305,12 +305,13 @@ a {
             position: relative;
             box-sizing: border-box;
             padding-top: 400px;
+            padding-bottom: 54px;
             top: -400px;
 
             & > div {   
                 height: 100%;
                 box-sizing: border-box;
-                overflow-y: scroll;
+                overflow-y: auto;
                 background: #EDEDED;
                 box-shadow: inset 4px 5px 6px -5px #999;
                 border-top: 1px solid #333;
@@ -318,12 +319,9 @@ a {
 
             .event-item {
                 overflow: hidden;
-                // max-height: 200px;
-                // transition: max-height 0.75s;
                 cursor: pointer;
 
                 &.selected {
-                    // max-height: 0;
                     box-shadow: inset 0 0 20px 0px #DDC7FF;
                     background: #fff;
                 }
@@ -368,6 +366,9 @@ a {
                 text-align: center;
                 width: 100%;
                 background-color: #fff;
+                position: absolute;
+                bottom: 0;
+                left: 0;
                 
                 ul.pagination {
                     overflow: hidden;
@@ -380,7 +381,20 @@ a {
                 li {
                     float: left;
                     padding: 0 5px;
-                }                
+
+                    &.active a, &.active a span {
+                        color: #333;
+                    }
+                    a, a span {
+                        color: #CD98C8;
+                        text-decoration: none;
+                        transition: color 0.25s linear;
+
+                        &:hover, &:hover span {
+                            color: #AB54A4;
+                        }
+                    }
+                }
             }
         }
     }

@@ -235,10 +235,8 @@ class BottomViewNav extends React.Component {
 
         return (
             <div id="bottom-view-nav">
-                <div>
-                    {listItems}
-                    <Paginator max={10} onChange={this.onChangePage}/>
-                </div>
+                <div>{listItems}</div>                
+                <Paginator max={10} onChange={this.onChangePage}/>
             </div>
         )
     }
