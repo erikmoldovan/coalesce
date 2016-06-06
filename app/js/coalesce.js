@@ -119,7 +119,10 @@ class TopViewNav extends React.Component {
         var selectedEvent = this.props.data.results[this.props.selectedItemIndex];
 
         if (selectedEvent === undefined) {
-            return (<div></div>);
+            return (
+              <div id="top-view-nav">
+                  <p>Please enter a zip code to start a seach.</p>
+              </div>);
         } else {
             var dur = selectedEvent.duration === undefined ? 0 : selectedEvent.duration + selectedEvent.time;
             var CalDate = moment(selectedEvent.time).format("dddd, MMMM DD, YYYY");
