@@ -293,7 +293,7 @@ a {
                 border-top: 1px solid #ccc;
                 font-size: 14px;
                 line-height: 19px;
-                overflow-y: scroll;
+                overflow-y: auto;
                 height: 160px;
 
             }
@@ -305,7 +305,7 @@ a {
             position: relative;
             box-sizing: border-box;
             padding-top: 400px;
-            padding-bottom: 54px;
+            padding-bottom: 49px;
             top: -400px;
 
             & > div {   
@@ -369,10 +369,11 @@ a {
                 position: absolute;
                 bottom: 0;
                 left: 0;
+                border-top: 1px solid #ccc;
                 
                 ul.pagination {
                     overflow: hidden;
-                    padding: 15px 10px 20px;
+                    padding: 14px 10px 15px;
                     box-sizing: border-box;
                     background-color: #fff;
                     display: inline-block;
