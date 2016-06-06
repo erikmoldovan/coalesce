@@ -1,13 +1,8 @@
 ** Sidebar **
 P Truncate description with elipsis and Read More link at end
-- Empty state for selection meetup section
 
 ** App Behavior (Integration/Tying it all together) **
 - Progress/loading indicator & Resetting defaults
-- Error Handling
-
-** Mobile & Tablet
-- Ugh...
 
 ** State Management
 P Change color of events that have been visited

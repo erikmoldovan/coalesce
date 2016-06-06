@@ -86,7 +86,11 @@ class Header extends React.Component {
 
     constructor() {
         super();
+        this.state = {
+            inputValue: undefined
+        };
         this.searchSubmit = this.searchSubmit.bind(this);
+        this.changeInput = this.changeInput.bind(this);
     }
 
     searchSubmit(evt) {
@@ -96,21 +100,24 @@ class Header extends React.Component {
     }
 
     changeInput() {
-        this.props.onUserInput(
-            this.refs.searchStringInput.value
-        )
+        console.log(this);
+        this.props.onUserInput(this.refs.input.value);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            inputValue: nextProps.currentZip
+        });
     }
 
     render() {
-        var inputZip = this.props.currentZip;
-        console.log(inputZip);
         return (
             <header id="main-header">
                 <div id="logo"></div>
                 <nav id="main-menu">
                     <nav id="search">
                         <form id="zipForm" name="zipForm" onSubmit={this.searchSubmit}>
-                            <input id="search-bar" value={this.props.currentZip} onChange={this.changeInput} type="text" name="search-bar" pattern="\d{5}?" maxLength="5" ref="input" placeholder="Enter a zip code"/>
+                            <input id="search-bar" value={this.state.inputValue} onChange={this.changeInput} type="text" name="search-bar" pattern="\d{5}?" maxLength="5" ref="input" placeholder="Enter a zip code"/>
                             <button type="submit" form="zipForm" value="Submit"></button>
                         </form>
                     </nav>
@@ -321,7 +328,6 @@ class PageRender extends React.Component {
     }
 
     getMeetupResults(searchArea) {
-        console.log("searchArea:", searchArea);
         var url = "http://localhost:9000/api/getOpenEvents?searchArea=" + searchArea;
 
         $.ajax({
@@ -346,7 +352,9 @@ class PageRender extends React.Component {
     }
 
     searchCallback(searchInput) {
-        console.log(searchInput);
+        this.setState({
+            currentZip: searchInput
+        });
         this.getLatLong(searchInput);
         this.getMeetupResults(searchInput);
     }
