@@ -1,5 +1,4 @@
 ** Sidebar **
-P Pagination of the list section
 P Truncate description with elipsis and Read More link at end
 - Empty state for selection meetup section
 

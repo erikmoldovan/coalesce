@@ -206,7 +206,8 @@ class BottomViewNav extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-      var paginated = nextProps.data.results.slice(0, 10)
+      var paginated = nextProps.data.results.slice(0, 10);
+
       this.setState({
         items: {
             paginated: paginated
