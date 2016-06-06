@@ -1,5 +1,6 @@
 const React = window.React;
 const { Map, TileLayer, Marker, Popup } = window.ReactLeaflet;
+const Paginator = window.ReactPaginate;
 
 class MapWrapper extends React.Component {
     constructor() {
@@ -173,12 +174,49 @@ class Event extends React.Component {
     }
 }
 
-class BottomViewNav extends React.Component {   
+class BottomViewNav extends React.Component { 
     displayName: "BottomViewNav"
+
+    constructor() {
+        super();
+        this.state = {
+            items: {
+                master: [],
+                paginated: []
+            }
+        };
+        this.onChangePage = this.onChangePage.bind(this);
+    }
+    onChangePage (page) {
+      console.log("this stuff right here", this);
+      var startIndex = (page * 10) - 10;
+      var endIndex = startIndex + 9;
+      var paginated = this.state.items.master.slice(startIndex, endIndex);
+      console.log("page is" ,page);
+
+      this.setState({
+        items: {
+          paginated: paginated
+        }
+      }); 
+    }
+
+    componentWillReceiveProps(nextProps) {
+      console.log("happy feet", nextProps);
+      var paginated = nextProps.data.results.slice(0, 10)
+      this.setState({
+        items: {
+            master: nextProps.data.results,
+            paginated: paginated
+        }       
+      });
+      console.log("this guy here", nextProps.data.results);
+      console.log("this other guy here", this.state.items.master);
+    }
 
     render() {
         var that = this;
-        var listItems = this.props.data.results.map(function(EventItem, index){
+        var listItems = this.state.items.paginated.map(function(EventItem, index){
             var selectedClass = "";
 
             if (index === that.props.selectedItemIndex) {
@@ -189,7 +227,10 @@ class BottomViewNav extends React.Component {
 
         return (
             <div id="bottom-view-nav">
-                <div>{listItems}</div>
+                <div>
+                    {listItems}
+                    <Paginator max={10} onChange={this.onChangePage}/>
+                </div>
             </div>
         )
     }
