@@ -95,15 +95,22 @@ class Header extends React.Component {
         this.props.searchCallback(newSearchInput);
     }
 
+    changeInput() {
+        this.props.onUserInput(
+            this.refs.searchStringInput.value
+        )
+    }
+
     render() {
-        console.log(this.props);
+        var inputZip = this.props.currentZip;
+        console.log(inputZip);
         return (
             <header id="main-header">
                 <div id="logo"></div>
                 <nav id="main-menu">
                     <nav id="search">
                         <form id="zipForm" name="zipForm" onSubmit={this.searchSubmit}>
-                            <input id="search-bar" value={this.props.currentZip} type="text" name="search-bar" pattern="\d{5}?" maxLength="5" ref="input" placeholder="Enter a zip code"/>
+                            <input id="search-bar" value={this.props.currentZip} onChange={this.changeInput} type="text" name="search-bar" pattern="\d{5}?" maxLength="5" ref="input" placeholder="Enter a zip code"/>
                             <button type="submit" form="zipForm" value="Submit"></button>
                         </form>
                     </nav>
@@ -242,7 +249,6 @@ class PageRender extends React.Component {
     constructor() {
         super();
         this.state = {
-            searchInput: undefined,
             selectedItemIndex: 0,
             events: {
                 results: []
@@ -273,7 +279,7 @@ class PageRender extends React.Component {
                     lon: Number(position.coords.longitude),
                     zoom: 12
                 },
-                searchInput: zip
+                currentZip: zip
             });
         };
     }
@@ -346,6 +352,7 @@ class PageRender extends React.Component {
     }
 
     searchCallback(searchInput) {
+        console.log(searchInput);
         this.getLatLong(searchInput);
         this.getMeetupResults(searchInput);
     }
