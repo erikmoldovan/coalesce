@@ -295,7 +295,7 @@ a {
                 line-height: 19px;
                 overflow-y: scroll;
                 height: 160px;
-                
+
             }
         }
         #bottom-view-nav {
@@ -363,6 +363,24 @@ a {
                         }
                     }
                 }
+            }
+            nav {
+                text-align: center;
+                width: 100%;
+                background-color: #fff;
+                
+                ul.pagination {
+                    overflow: hidden;
+                    padding: 15px 10px 20px;
+                    box-sizing: border-box;
+                    background-color: #fff;
+                    display: inline-block;
+                }
+
+                li {
+                    float: left;
+                    padding: 0 5px;
+                }                
             }
         }
     }
