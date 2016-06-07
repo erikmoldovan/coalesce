@@ -1,5 +1,5 @@
 ** Sidebar **
-P Truncate description with elipsis and Read More link at end
+P Truncate description with elipsis
 
 ** App Behavior (Integration/Tying it all together) **
 - Progress/loading indicator & Resetting defaults
